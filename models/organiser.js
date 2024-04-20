@@ -7,6 +7,7 @@ const organiserSchema = new mongoose.Schema({
     username: { type: String, required: true },
     password: { type: String, required: true },
     realmIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Realm' }] // Reference to Realm model
+    
 });
 
 

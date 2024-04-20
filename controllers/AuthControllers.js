@@ -10,9 +10,10 @@ exports.signup = async (req, res) => {
         // Create a new User document
         const newUser = new User({ username, password, email });
         await newUser.save();
+        
 
         console.log("User records inserted successfully");
-        res.redirect('/home');
+        res.redirect('/signin');
     } catch (error) {
         console.error('Error:', error.message);
         if (error.name === 'ValidationError') {
@@ -24,6 +25,7 @@ exports.signup = async (req, res) => {
         }
     }
 };
+
 
 exports.signin = async (req, res) => {
     const { username, password } = req.body;
@@ -41,12 +43,14 @@ exports.signin = async (req, res) => {
             return res.status(401).json({ error: 'Invalid username or password' });
         }
 
+        // Generate JWT token
+        const token = jwt.sign({ username: user.username }, 'coderealm_secret_code');
+
         console.log("User signed in successfully");
+        res.cookie('userjwt', token, { httpOnly: true }); // Set JWT token in a cookie named 'userjwt'
         res.redirect('/home');
     } catch (error) {
         console.error('Error:', error.message);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
-
-

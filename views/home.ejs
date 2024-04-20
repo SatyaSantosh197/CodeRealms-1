@@ -1,11 +1,507 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/css/home_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 </head>
+
 <body>
-    <h1>Home Page!!</h1>
+
+    <div style="position: fixed; z-index: -1;">
+        <video src="/videos/background.mp4" muted autoplay loop style=""></video>
+    </div>
+
+    <div>
+        <div class="navBar">
+            <div class="logo">
+                <img src="/images/logo.png" class="logoMain">
+
+            </div>
+
+            <div class="all_icons">
+                <div class="panelICon1"><ion-icon name="newspaper-outline" class="questions"
+                        id="questionicon"></ion-icon>
+                </div>
+                <div class="panel2ICon"><ion-icon name="home-outline" class="home" id="homeicon"></ion-icon></div>
+                <div class="panel3Icon">
+                    <ion-icon name="person-outline" class="user" id="profileicon"></ion-icon>
+                    <span class="username">
+                        <%= username %>
+                    </span>
+                </div>
+
+
+
+            </div>
+
+            <div class="searchAndExit">
+                <div class="searchInput">
+                    <input type="text" placeholder="Search" class="searchi" id="searchInput">
+                </div>
+                <!-- <div class="searchImage"><ion-icon name="search-outline" class="search" type="button" value="Join" id="create_realme"></ion-icon></div> -->
+                <input type="button" class="searchbit"
+                    style="display: flex; background-color: transparent; border-style: none;" value="🔍"
+                    id="create_realme">
+
+            </div>
+            <div class="Exit">
+
+                <img src="/images/user_profile.png" name="exit-outline" class="exitIcon" id="exitIcon"
+                    onclick="wrong"></ion-icon>
+                <div class="profileOptions">
+                    <ul>
+                        <li><a href="/index">Logout</a></li>
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        // Get all the buttons by their IDs
+        const btnHome = document.getElementById('homeicon');
+        const btnQuestion = document.getElementById('questionicon');
+        const btnProfile = document.getElementById('profileicon');
+
+        // Variable to store the previously clicked button
+        let prevClickedBtn = null;
+
+        // Function to handle click event
+        function onClick(event) {
+            // Change text color for clicked element only
+            event.target.style.color = 'rgb(255, 255, 255)';
+            // Change font size for clicked element only
+            event.target.style.fontSize = '20px';
+            // Add white bottom border
+            event.target.style.borderBottom = '2px solid white';
+            event.target.style.borderRadius = '1px';
+            event.target.style.transform = 'translateY(0px)'
+
+            // Revert properties of the previously clicked button
+            if (prevClickedBtn && prevClickedBtn !== event.target) {
+                prevClickedBtn.style.color = '';
+                prevClickedBtn.style.fontSize = '';
+                prevClickedBtn.style.borderBottom = '';
+                prevClickedBtn.style.borderRadius = '';
+            }
+
+            // Update the previously clicked button
+            prevClickedBtn = event.target;
+        }
+
+        // Add click event listeners to each button
+        btnHome.addEventListener('click', onClick);
+        btnQuestion.addEventListener('click', onClick);
+        btnProfile.addEventListener('click', onClick);
+
+        const exitIcon = document.getElementById('exitIcon');
+        const description = document.getElementById('description');
+
+        // exitIcon.addEventListener('click', function() {
+        //     const confirmLogout = window.confirm("Are you sure you want to log out?");
+        //     if (confirmLogout) {
+        //         // Perform logout action here
+        //         // For now, let's just hide the description
+        //         description.style.display = 'none';
+        //     }
+        // });
+        document.getElementById("exitIcon").onclick = function () {
+            document.querySelector(".profileOptions").classList.toggle("show");
+        }
+
+
+    </script>
+    <!-- 
+    <div class="title_div">
+
+    </div> -->
+
+    <div class="main_page_Layout">
+
+        <div class="dropdown-container">
+
+
+            <div class="cardHeader">
+                <div class="cardTitle">$realme_dashboard</div>
+
+                <div class="cardControls">
+                    <div class="Control redControl"></div>
+                    <div class="Control yellowControl"></div>
+                    <div class="Control greenControl"></div>
+                </div>
+            </div>
+
+            <link href='https://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>
+
+            <!-- <div class="glitch">Realme Dashboard</div>  -->
+
+            <br>
+            <br>
+
+            <div class="realme_container">
+                <% dropdownsHTML.forEach((dropdownHTML, index)=> { %>
+                    <%- dropdownHTML %>
+                        <% }) %>
+            </div>
+
+
+
+        </div>
+
+        <div class="right_section">
+            <div class="right_upper" style="padding: 10px;">
+                Event Calendar
+
+                <br>
+                <br>
+
+                <div class="event_calendar_Section" style="padding: 10px 0 10px 10px;">
+                    <div class="scrollable_event">
+                        <div class="event-container">
+                            <h3 class="year">2024</h3>
+
+                            <div class="event">
+                                <div class="event-left">
+                                    <div class="event-date">
+                                        <div class="date">20</div>
+                                        <div class="month">Jun</div>
+                                    </div>
+                                </div>
+
+                                <div class="event-right">
+                                    <h3 class="event-title">GDSC</h3>
+
+                                    <div class="event-description">
+                                        GameJam_2024 by Alexandra
+                                    </div>
+
+                                    <div class="event-timing">
+                                        <img src="images/time.png" alt="" /> 10:00 am
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="event">
+                                <div class="event-left">
+                                    <div class="event-date">
+                                        <div class="date">10</div>
+                                        <div class="month">Aug</div>
+                                    </div>
+                                </div>
+
+                                <div class="event-right">
+                                    <h3 class="event-title">GDSC</h3>
+
+                                    <div class="event-description">
+                                        JavaScript_Bootcamp by Michael
+                                    </div>
+
+                                    <div class="event-timing">
+                                        <img src="images/time.png" alt="" /> 10:45 am
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="event">
+                                <div class="event-left">
+                                    <div class="event-date">
+                                        <div class="date">2</div>
+                                        <div class="month">Mar</div>
+                                    </div>
+                                </div>
+
+                                <div class="event-right">
+                                    <h3 class="event-title">GDSC</h3>
+
+                                    <div class="event-description">
+                                        MachineLearning_Bootcamp by Sophie Turner
+                                    </div>
+
+                                    <div class="event-timing">
+                                        <img src="images/time.png" alt="" /> 10:00 am
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="event">
+                                <div class="event-left">
+                                    <div class="event-date">
+                                        <div class="date">15</div>
+                                        <div class="month">Sep</div>
+                                    </div>
+                                </div>
+
+                                <div class="event-right">
+                                    <h3 class="event-title">Be_Cool_Event_2024</h3>
+
+                                    <div class="event-description">
+                                        Be Cool Event 2024 by John Doe
+                                    </div>
+
+                                    <div class="event-timing">
+                                        <img src="images/time.png" alt="" /> 10:45 am
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="event">
+                                <div class="event-left">
+                                    <div class="event-date">
+                                        <div class="date">8</div>
+                                        <div class="month">Nov</div>
+                                    </div>
+                                </div>
+
+                                <div class="event-right">
+                                    <h3 class="event-title">Learning_Mistakes_Event_2024</h3>
+
+                                    <div class="event-description">
+                                        Learning Mistakes Event 2024 by Emma Smith
+                                    </div>
+
+                                    <div class="event-timing">
+                                        <img src="images/time.png" alt="" /> 10:00 am
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="event">
+                                <div class="event-left">
+                                    <div class="event-date">
+                                        <div class="date">23</div>
+                                        <div class="month">Jul</div>
+                                    </div>
+                                </div>
+
+                                <div class="event-right">
+                                    <h3 class="event-title">Hours_Brain_Again_Event_2024</h3>
+
+                                    <div class="event-description">
+                                        Hours Brain Again Event 2024 by Daniel Brown
+                                    </div>
+
+                                    <div class="event-timing">
+                                        <img src="images/time.png" alt="" /> 10:30 am
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="right_lower">
+                Trending Realme's
+                <br>
+                <br>
+                <div class="scrollerx" data-speed="fast" style="padding: 10px;">
+                    <ul class="tag-list scroller__inner">
+                        <li>
+                            <div class="inner2"> HTML</div>
+                            <button class="joins">JOIN</button>
+                        </li>
+                        <li>
+                            <div class="inner2"> CSS</div>
+                            <button class="joins">JOIN</button>
+                        </li>
+                        <li>
+                            <div class="inner2">JS</div>
+                            <button class="joins">JOIN</button>
+                        </li>
+                        <li>
+                            <div class="inner2">SSG</div>
+                            <button class="joins">JOIN</button>
+                        </li>
+                        <li>
+                            <div class="inner2">webdev</div>
+                            <button class="joins">JOIN</button>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+
+
+
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+
+                    <div class="footer-about">
+                        <img style="height: 250px; width: 400PX; margin-top: -50px;" src="logo.png"" alt=" csrelm">
+                        <p style="margin-top: -20px;">Lorem Ipsum is simply dummy text of the printing and typesetting
+                            industry. since the 1500s,
+                        </p>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <div class="useful-link">
+                        <h2>Useful Links</h2>
+                        <img src="./assets/images/about/home_line.png" alt="" class="img-fluid">
+                        <div class="use-links">
+                            <li><a href="index.html"><i class="fa-solid fa-angles-right"></i> Home</a></li>
+                            <li><a href="about.html"><i class="fa-solid fa-angles-right"></i> About Us</a></li>
+                            <li><a href="gallery.html"><i class="fa-solid fa-angles-right"></i> Gallery</a></li>
+                            <li><a href="contact.html"><i class="fa-solid fa-angles-right"></i> Contact</a></li>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <div class="social-links">
+                        <h2>Follow Us</h2>
+                        <img src="./assets/images/about/home_line.png" alt="">
+                        <div class="social-icons">
+                            <li><a href=""><i class="fa-brands fa-facebook-f"></i> Facebook</a></li>
+                            <li><a href=""><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                            <li><a href=""><i class="fa-brands fa-linkedin-in"></i> Linkedin</a></li>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-3">
+                    <div class="address">
+                        <h2>Address</h2>
+                        <img src="./assets/images/about/home_line.png" alt="" class="img-fluid">
+                        <div class="address-links">
+                            <li class="address1"><i class="fa-solid fa-location-dot"></i> iiit sricity
+                                sricity
+                                andhra pradesh 517646</li>
+                            <li><a href=""><i class="fa-solid fa-phone"></i> +91 9938584270</a></li>
+                            <li><a href=""><i class="fa-solid fa-envelope"></i> coderealms@iiits.in</a></li>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </footer>
+
+
+    <!-- footer section end -->
+    <!-- footer copy right section start -->
+    <section id="copy-right">
+        <div class="copy-right-sec"><i class="fa-solid fa-copyright"></i>
+
+            code realms a project by <a href="#">team zenith</a>
+
+
+        </div>
+
+    </section>
+
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+
+            const dropdowns = document.querySelectorAll('.dropdown');
+            const dropdownContainer = document.querySelector('.dropdown-container');
+
+            dropdowns.forEach(function (dropdown, index) {
+                const dropdownContent = dropdown.querySelector('.dropdown-content');
+                const originalTop = dropdownContainer.getBoundingClientRect().top - 10;
+
+                dropdown.addEventListener('mouseenter', function () {
+                    const dropdownHeight = dropdownContent.offsetHeight;
+                    const dropdownTop = originalTop + dropdown.getBoundingClientRect().height - 2;
+
+                    // Calculate the total height of open dropdowns
+                    let totalDropdownHeight = dropdownHeight - 10;
+                    dropdowns.forEach(function (otherDropdown, otherIndex) {
+                        if (otherIndex > index && otherDropdown.classList.contains('show')) {
+                            totalDropdownHeight += otherDropdown.querySelector('.dropdown-content').offsetHeight - 80;
+                        }
+                    });
+
+                    // Adjust positions of subsequent dropdowns
+                    dropdowns.forEach(function (otherDropdown, otherIndex) {
+                        if (otherIndex > index) {
+                            const otherDropdownTop = otherDropdown.getBoundingClientRect().top - dropdownContainer.getBoundingClientRect().top - 200;
+                            if (dropdownTop + totalDropdownHeight > otherDropdownTop) {
+                                otherDropdown.style.top = (dropdownTop + totalDropdownHeight) - 90 + 'px';
+                                totalDropdownHeight += otherDropdown.querySelector('.dropdown-content').offsetHeight;
+                            } else {
+                                otherDropdown.style.top = '0'; // Reset top if no longer overlapping
+                            }
+                        }
+                    });
+                });
+
+                dropdown.addEventListener('mouseleave', function () {
+                    // Reset top for all subsequent dropdowns
+                    dropdowns.forEach(function (otherDropdown, otherIndex) {
+                        if (otherIndex > index) {
+                            otherDropdown.style.top = '0'; // Reset top for all subsequent dropdowns
+                        }
+                    });
+                });
+            });
+        });
+
+
+
+        const scrollers = document.querySelectorAll(".scrollerx");
+
+        // If a user hasn't opted in for reduced motion, then we add the animation
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            addAnimation();
+        }
+
+        function addAnimation() {
+            scrollers.forEach((scroller) => {
+                // add data-animated="true" to every `.scroller` on the page
+                scroller.setAttribute("data-animated", true);
+
+                // Make an array from the elements within `.scroller-inner`
+                const scrollerInner = scroller.querySelector(".scroller__inner");
+                const scrollerContent = Array.from(scrollerInner.children);
+
+                // For each item in the array, clone it
+                // add aria-hidden to it
+                // add it into the `.scroller-inner`
+                scrollerContent.forEach((item) => {
+                    const duplicatedItem = item.cloneNode(true);
+                    duplicatedItem.setAttribute("aria-hidden", true);
+                    scrollerInner.appendChild(duplicatedItem);
+                });
+            });
+        }
+
+        const searchInput = document.getElementById('searchInput');
+
+        // Add event listener for key press
+        searchInput.addEventListener('keypress', function (event) {
+            // Check if Enter key is pressed
+            if (event.key === 'Enter') {
+                // Get the value from the search input
+                const searchTerm = searchInput.value;
+                // Redirect to the realm_search page with the search term as a query parameter
+                window.location.href = `/realm_search?q=${searchTerm}`;
+            }
+        });
+
+
+    </script>
 </body>
-</html>
