@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const AuthController = require('../controllers/AuthControllers');
 
+const Organiser = require('../models/organiser');
 const Realm = require('../models/realm');
 const Contest = require('../models/contest')
 const jwt = require('jsonwebtoken');

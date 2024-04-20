@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const Organiser = require('../models/organiser'); // Assuming this is the correct import for the Organiser model
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 

@@ -1,4 +1,8 @@
-const User = require('../models/organiser');
+const User = require('../models/User');
+const Organiser = require('../models/organiser'); // Assuming this is the correct import for the Organiser model
+const jwt = require('jsonwebtoken');
+const bcrypt = require("bcrypt");
+
 
 exports.login = async (req, res) => {
     const { username, password } = req.body;

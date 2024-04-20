@@ -1,11 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const AuthController = require('../controllers/OrganiserController');
+const OrganiserController = require('../controllers/OrganiserController');
+const jwt = require('jsonwebtoken');
+
 
 const Organiser = require("../models/organiser");
+const Realm = require("../models/realm");
+const Contest = require("../models/contest");
+const Problem = require("../models/problem");
 
-router.post("/login", AuthController.login);
-router.post("/register", AuthController.register);
+router.post("/login", OrganiserController.login);
+router.post("/register", OrganiserController.register);
 
 router.get("/register", (req, res) => {
     res.render('register');
