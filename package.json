@@ -1,0 +1,34 @@
+{
+  "name": "allidea",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "ansi-styles": "^4.3.0",
+    "async": "^3.2.5",
+    "axios": "^1.6.8",
+    "balanced-match": "^1.0.2",
+    "bcrypt": "^5.1.1",
+    "brace-expansion": "^1.1.11",
+    "chalk": "^4.1.2",
+    "color-convert": "^2.0.1",
+    "color-name": "^1.1.4",
+    "concat-map": "^0.0.1",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "filelist": "^1.0.4",
+    "has-flag": "^4.0.0",
+    "jake": "^10.8.7",
+    "jsonwebtoken": "^9.0.2",
+    "minimatch": "^3.1.2",
+    "mongo": "^0.1.0",
+    "mongoose": "^8.3.2",
+    "supports-color": "^7.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

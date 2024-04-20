@@ -1,0 +1,242 @@
+<head>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/css/org_style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+      let div = document.createElement('div');
+
+      div.classList.add('dropdown');
+
+      let containerDiv = document.querySelector('.dropdown-container');
+      containerDiv.appendChild(div);
+
+      let submitBtn = document.getElementById('create_realme');
+      submitBtn.addEventListener('click', displayRealme);
+
+      const realmDatabase = {
+        'gdsc-iiits': ['GDSC-IIITS', 'GameJam2024', 'http://localhost:3000/gdsc-ggj24', 'JavaScript-Bootcamp', 'http://localhost:3000/gdsc-js-bootcamp', 'Machine Lerning', 'http://localhost:3000/gdsc-ml-bootcamp'],
+        'ted-india': ['Ted India', 'How to be Cool?', 'http://localhost:3000/ted-be-cool24', 'Learn from mistakes...', 'http://localhost:3000/ted-lrn-mistks24', 'Heros are born again', 'http://localhost:3000/ted-hrs-brn-agn24'],
+
+      };
+
+
+      function displayRealme() {
+
+        let realme_id = document.querySelector('#realme_id').value;
+
+        let html = `
+       
+       
+         <button class="dropdown-btn">${realmDatabase[realme_id][0]}</button>
+         <div class="dropdown-content">
+         <a href="${realmDatabase[realme_id][2]}" style="--i:1;"><span></span>${realmDatabase[realme_id][1]}</a>
+         <a href="${realmDatabase[realme_id][4]}" style="--i:2;"><span></span>${realmDatabase[realme_id][3]}</a>
+         <a href="${realmDatabase[realme_id][6]}" style="--i:3;"><span></span>${realmDatabase[realme_id][5]}</a>
+         </div>
+       
+                   `;
+
+        div.insertAdjacentHTML('beforeend', html);
+
+      }
+    });
+
+  </script>
+</head>
+
+<body>
+
+  <div style="position: fixed; z-index: -1; width:107px ">
+    <video src="/videos/background.mp4" muted autoplay loop></video>
+  </div>
+
+  <div>
+
+
+    <div class="navBar">
+
+
+
+      <div class="logo">
+        <img src="/images/logo.png" class="logoMain">
+
+      </div>
+
+      <div class="all_icons">
+        <div class="panelICon1"><ion-icon name="newspaper-outline" class="questions" id="questionicon"></ion-icon>
+        </div>
+        <div class="panel2ICon"><ion-icon name="home-outline" class="home" id="homeicon"></ion-icon></div>
+        <div class="panel3Icon"><ion-icon name="person-outline" class="user" id="profileicon"></ion-icon>
+          <span class="username">
+            <%= username %>
+          </span>
+        </div>
+
+      </div>
+
+      <div class="searchAndExit">
+        <div class="searchBar">
+          <div class="searchInput"><input type="text" placeholder="Search" class="searchi" id="realme_id"></div>
+          <!-- <div class="searchImage"><ion-icon name="search-outline" class="search" type="button" value="Join" id="create_realme"></ion-icon></div> -->
+          <input type="button" class="searchbit"
+            style="display: flex; background-color: transparent; border-style: none;" value="🔍" id="create_realme">
+
+        </div>
+        <div class="Exit">
+
+          <img src="/images/user_profile.png" name="exit-outline" class="exitIcon" id="exitIcon"
+            onclick="wrong"></ion-icon>
+          <div class="profileOptions">
+            <ul>
+              <li><a href="/">Logout</a></li>
+              <li><a href="#">Settings</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="/scripts/navjs1.js"></script>
+    <script src="/scripts/org_realme_form.js"></script>
+
+
+    <div class="main_page_Layout">
+
+      <div class="dropdown-container">
+
+        <link href='https://fonts.googleapis.com/css?family=Varela' rel='stylesheet' type='text/css'>
+
+        <div class="cardHeader">
+          <div class="cardTitle">$realme_dashboard</div>
+
+          <div class="cardControls">
+            <div class="Control redControl"></div>
+            <div class="Control yellowControl"></div>
+            <div class="Control greenControl"></div>
+          </div>
+        </div>
+
+        <br>
+        <br>
+        <div class="realme_container">
+            <% dropdownsHTML.forEach((dropdownHTML, index)=> { %>
+              <%- dropdownHTML %>
+            <% }) %>
+        </div>
+
+
+        <div class="create_realme_button_div">
+          <button class="make_realme_button_org" onclick="createRealme()"><strong
+              style="font-size: xx-large;">+</strong> Create Realme</button>
+        </div>
+
+      </div>
+
+
+
+      <div class="right_section">
+
+
+        <div class="right_upper">
+
+
+
+
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      const dropdownContainer = document.querySelector('.dropdown-container');
+
+      dropdowns.forEach(function (dropdown, index) {
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+        const originalTop = dropdownContainer.getBoundingClientRect().top - 10;
+
+        dropdown.addEventListener('mouseenter', function () {
+          const dropdownHeight = dropdownContent.offsetHeight;
+          const dropdownTop = originalTop + dropdown.getBoundingClientRect().height - 2;
+
+          // Calculate the total height of open dropdowns
+          let totalDropdownHeight = dropdownHeight - 10;
+          dropdowns.forEach(function (otherDropdown, otherIndex) {
+            if (otherIndex > index && otherDropdown.classList.contains('show')) {
+              totalDropdownHeight += otherDropdown.querySelector('.dropdown-content').offsetHeight - 80;
+            }
+          });
+
+          // Adjust positions of subsequent dropdowns
+          dropdowns.forEach(function (otherDropdown, otherIndex) {
+            if (otherIndex > index) {
+              const otherDropdownTop = otherDropdown.getBoundingClientRect().top - dropdownContainer.getBoundingClientRect().top - 200;
+              if (dropdownTop + totalDropdownHeight > otherDropdownTop) {
+                otherDropdown.style.top = (dropdownTop + totalDropdownHeight) - 90 + 'px';
+                totalDropdownHeight += otherDropdown.querySelector('.dropdown-content').offsetHeight;
+              } else {
+                otherDropdown.style.top = '0'; // Reset top if no longer overlapping
+              }
+            }
+          });
+        });
+
+        dropdown.addEventListener('mouseleave', function () {
+          // Reset top for all subsequent dropdowns
+          dropdowns.forEach(function (otherDropdown, otherIndex) {
+            if (otherIndex > index) {
+              otherDropdown.style.top = '0'; // Reset top for all subsequent dropdowns
+            }
+          });
+        });
+      });
+    });
+
+
+
+    const scrollers = document.querySelectorAll(".scrollerx");
+
+    // If a user hasn't opted in for reduced motion, then we add the animation
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      addAnimation();
+    }
+
+    function addAnimation() {
+      scrollers.forEach((scroller) => {
+        // add data-animated="true" to every `.scroller` on the page
+        scroller.setAttribute("data-animated", true);
+
+        // Make an array from the elements within `.scroller-inner`
+        const scrollerInner = scroller.querySelector(".scroller__inner");
+        const scrollerContent = Array.from(scrollerInner.children);
+
+        // For each item in the array, clone it
+        // add aria-hidden to it
+        // add it into the `.scroller-inner`
+        scrollerContent.forEach((item) => {
+          const duplicatedItem = item.cloneNode(true);
+          duplicatedItem.setAttribute("aria-hidden", true);
+          scrollerInner.appendChild(duplicatedItem);
+        });
+      });
+    }
+
+
+  </script>
+</body>
