@@ -97,6 +97,85 @@ router.get('/organisation_page', async (req, res) => {
 
 
 
+
+function generateRealmId(name) {
+    return name + Math.random().toString(36).substr(2, 9);
+}
+
+
+
+router.post('/create-realm', async (req, res) => {
+    try {
+
+        const token = req.cookies.jwt;
+
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+
+        const decodedToken = jwt.verify(token, 'coderealm_secret_code');
+        const username = decodedToken.username;
+
+        // Find the organizer using the extracted username
+        const organizer = await Organiser.findOne({ username });
+
+        if (!organizer) {
+            return res.status(404).json({ success: false, message: 'Organiser not found' });
+        }
+
+        const { name, contests, problems } = req.body;
+
+        const contestIds = [];
+        const problemIds = [];
+
+        // Create contests and problems, and collect their IDs
+        for (const contestData of contests) {
+            // Create contest
+            const contest = await Contest.create({
+                text: contestData.name,
+                badge: {}
+            });
+
+            contestIds.push(contest._id);
+
+            // Create problems for the contest
+            const contestProblems = [];
+            for (const problemData of contestData.problems) {
+                const problem = await Problem.create({
+                    question: problemData.question,
+                    rating: problemData.rating,
+                    points: problemData.points,
+                });
+
+                problemIds.push(problem._id);
+                contestProblems.push(problem._id);
+            }
+
+            // Update contest with problem IDs
+            await Contest.findByIdAndUpdate(contest._id, { arrproblem: contestProblems });
+        }
+
+        // Create a new realm
+        const newRealm = await Realm.create({
+            realmeId: generateRealmId(name),
+            name: name,
+            arrContests: contestIds,
+            arrProblems: problemIds,
+        });
+
+        // Update the organizer's realmIds array
+        organizer.realmIds.push(newRealm._id);
+        await organizer.save();
+
+        res.status(201).json({ success: true, realmId: newRealm._id });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Failed to create realm' });
+    }
+});
+
+
+
 // Assuming you have already imported necessary models and middleware
 router.post('/fetch-contests', async (req, res) => {
     try {
