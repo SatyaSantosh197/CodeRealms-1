@@ -182,4 +182,167 @@ document.addEventListener('DOMContentLoaded', function () {
     function clearRightUpper() {
         rightUpperDiv.innerHTML = '';
     }
+
+
+    function displayContests(realmName) {
+        fetch('/fetch-contests', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ realmName })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Failed to fetch contests');
+            }
+        })
+        .then(data => {
+            // Clear the right-upper section
+            clearRightUpper();
+    
+            if (data.success) {
+                // Create a container for the realm
+                const realmContainer = document.createElement('div');
+                realmContainer.classList.add('realm-container');
+    
+                // Display realm name
+                const realmNameElement = document.createElement('h2');
+                realmNameElement.textContent = `Realm Name: ${realmName}`;
+                realmContainer.appendChild(realmNameElement);
+    
+                // Create a container for contests
+                const contestContainer = document.createElement('div');
+                contestContainer.classList.add('contest-container');
+    
+                // Check if contests are available
+                if (data.contestNames && data.contestNames.length > 0) {
+                    // Iterate over fetched contest names and create elements to display them
+                    data.contestNames.forEach(contestName => {
+                        const contestElement = document.createElement('div');
+                        contestElement.textContent = `- ${contestName}`; // Display contest name
+                        contestContainer.appendChild(contestElement);
+                    });
+                } else {
+                    const noContestsElement = document.createElement('p');
+                    noContestsElement.textContent = 'No contests found for this realm.';
+                    contestContainer.appendChild(noContestsElement);
+                }
+    
+                // Append the contest container to the realm container
+                realmContainer.appendChild(contestContainer);
+    
+                // Append the realm container to the right-upper section
+                rightUpperDiv.appendChild(realmContainer);
+    
+                // Create and append "Add New Contest" button
+                const addNewContestButton = document.createElement('button');
+                addNewContestButton.textContent = 'Add New Contest';
+                addNewContestButton.classList.add('add-new-contest-button');
+                realmContainer.appendChild(addNewContestButton);
+    
+                // Add event listener to "Add New Contest" button
+                addNewContestButton.addEventListener('click', function () {
+                    // Clear the right-upper section
+                    clearRightUpper();
+    
+                    // Display form for creating a new contest
+                    const createContestForm = document.createElement('form');
+                    createContestForm.classList.add('create-contest-form');
+    
+                    // Create inputs for contest details
+                    const nameLabel = document.createElement('label');
+                    nameLabel.textContent = 'Contest Name:';
+                    const nameInput = document.createElement('input');
+                    nameInput.setAttribute('type', 'text');
+                    nameInput.setAttribute('placeholder', 'Enter contest name');
+                    nameInput.setAttribute('required', '');
+    
+                    // Create a button to submit the form
+                    const submitButton = document.createElement('button');
+                    submitButton.setAttribute('type', 'submit');
+                    submitButton.textContent = 'Create Contest';
+    
+                    // Add event listener to form submission
+                    createContestForm.addEventListener('submit', function (event) {
+                        event.preventDefault();
+    
+                        // Retrieve contest name from the form
+                        const contestName = nameInput.value;
+    
+                        // Send contest data to the server to create a new contest
+                        fetch('/create-contest', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ realmName, contestName })
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                // Add the newly created contest's ObjectId to the realm
+                                const realmName = document.querySelector('.dropdown-btn').textContent;
+                                fetch('/update-realm', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ realmName, contestId: data.contestId })
+                                })
+                                .then(response => {
+                                    if (response.ok) {
+                                        // If updating realm is successful, display contests again
+                                        displayContests(realmName);
+                                    } else {
+                                        throw new Error('Failed to update realm with new contest');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error(error);
+                                    // Handle error updating realm
+                                });
+                            } else {
+                                throw new Error(data.message || 'Failed to create contest');
+                            }
+                        })
+                        
+                        .catch(error => {
+                            console.error(error); // Handle error
+                            // Show error message
+                        });
+                    });
+    
+                    // Append inputs and submit button to the form
+                    createContestForm.appendChild(nameLabel);
+                    createContestForm.appendChild(nameInput);
+                    createContestForm.appendChild(submitButton);
+    
+                    // Append the form to the right-upper section
+                    rightUpperDiv.appendChild(createContestForm);
+                });
+            } else {
+                throw new Error(data.message || 'Failed to fetch contests');
+            }
+        })
+        .catch(error => {
+            console.error(error); // Handle error
+            // Show error message
+        });
+    }
+    
+    // Add event listener to dropdown buttons to display contests when clicked
+    dropdownContainer.addEventListener('click', function (event) {
+        if (event.target && event.target.classList.contains('dropdown-btn')) {
+            const realmName = event.target.textContent;
+            displayContests(realmName);
+        }
+    });
+    
+
+
+
+
+
 });

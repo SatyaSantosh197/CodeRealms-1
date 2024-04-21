@@ -146,6 +146,7 @@ router.get("/realm_search", async (req, res) => {
 
 
 
+
 router.post("/join_realm", async (req, res) => {
     try {
         const token = req.cookies.userjwt;

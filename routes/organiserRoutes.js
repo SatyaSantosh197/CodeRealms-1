@@ -95,4 +95,90 @@ router.get('/organisation_page', async (req, res) => {
     }
 });
 
+
+
+// Assuming you have already imported necessary models and middleware
+router.post('/fetch-contests', async (req, res) => {
+    try {
+        const { realmName } = req.body;
+
+        // Find the realm based on the name
+        const realm = await Realm.findOne({ name: realmName }).populate({
+            path: 'arrContests',
+            select: 'text' // Select only the text field (contest name)
+        });
+
+        if (!realm) {
+            return res.status(404).json({ success: false, message: 'Realm not found' });
+        }
+
+        // Extract contest names from the realm
+        const contestNames = realm.arrContests.map(contest => contest.text);
+
+        res.status(200).json({ success: true, contestNames });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Failed to fetch contests' });
+    }
+});
+
+
+// Route for creating a new contest
+router.post('/create-contest', async (req, res) => {
+    try {
+        const { realmName, contestName } = req.body;
+
+        // Create a new contest
+        const newContest = new Contest({
+            text: contestName // Assuming the contest name is stored in the 'text' field
+        });
+
+        // Save the new contest to the database
+        const savedContest = await newContest.save();
+
+        // Find the realm based on the name
+        const realm = await Realm.findOne({ name: realmName });
+
+        if (!realm) {
+            return res.status(404).json({ success: false, message: 'Realm not found' });
+        }
+
+        // Add the contest ObjectId to the realm's array of contests
+        realm.arrContests.push(savedContest._id);
+        await realm.save();
+
+        res.status(201).json({ success: true, contestId: savedContest._id });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Failed to create contest' });
+    }
+});
+
+
+// Route for updating the realm with the new contest
+router.post('/update-realm', async (req, res) => {
+    try {
+        const { realmName, contestId } = req.body;
+
+        // Find the realm based on the name
+        const realm = await Realm.findOne({ name: realmName });
+
+        if (!realm) {
+            return res.status(404).json({ success: false, message: 'Realm not found' });
+        }
+
+        // Add the contest ObjectId to the realm's array of contests
+        realm.arrContests.push(contestId);
+        await realm.save();
+
+        res.status(200).json({ success: true, message: 'Realm updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Failed to update realm' });
+    }
+});
+
+
+
+
 module.exports = router;
