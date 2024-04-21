@@ -23,58 +23,58 @@ const UserSchema = new mongoose.Schema({
     },
     address: {
         type: String,
-       
+
     },
     phoneNumber: {
         type: String,
-        
+
     },
     instagramLink: {
         type: String,
-        
+
     },
     linkedinLink: {
         type: String,
-      
+
     },
     twitterLink: {
         type: String,
-       
+
     },
     name: {
         type: String,
-       
+
     },
     type: {
         type: String,
-       
+
     },
     college: {
         type: String,
-       
+
     },
     aboutme: {
         bio: {
             type: String,
-           
+
         },
         experience: [{
             type: String,
-           
+
         }],
         education: [{
             type: String,
-           
+
         }]
     },
     skills: [{
         title: {
             type: String,
-           
+
         },
         description: {
             type: String,
-           
+
         }
     }],
     realmIds: [
@@ -82,25 +82,18 @@ const UserSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId, ref: 'Realm'
         }
     ],
-    arrproblem: [{
-        problemId: {
-            type: mongoose.Schema.Types.ObjectId,ref: 'Problem'
-        },
-        points: {
-            type: Number,
-            default: 0
+    arrProblems: [
+        {
+            type: mongoose.Schema.Types.ObjectId, ref: 'Problem'
         }
-    }],
-    arrcontest: [{
-        contestId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Contest'
-        },
-        points: {
-            type: Number,
-            default: 0
+    ],
+    arrContests: [
+        { 
+            type: mongoose.Schema.Types.ObjectId, ref: 'Contest' 
         }
-    }]
+    ]
+
+
 });
 
 

@@ -11,6 +11,8 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const Problem = require('../models/problem');
 
+const nodemailer = require('nodemailer');
+
 router.post("/signup", AuthController.signup);
 router.post("/signin", AuthController.signin);
 
@@ -156,20 +158,51 @@ router.post("/join_realm", async (req, res) => {
 
         // Verify the token
         const decoded = jwt.verify(token, 'coderealm_secret_code');
-        const { username } = decoded;
+        const { username, email } = decoded;
 
         // Find the user based on the username
         const user = await User.findOne({ username });
-        console.log(user);
+
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
+
+
         // Add the realm ID to the user's realmIds array
         user.realmIds.push(realmId);
-
         // Save the updated user object back to the database
         await user.save();
+
+
+
+        //sending Email
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'abhiram.k22@iiits.in',
+                pass: 'tempPassword' // Enter your Gmail app password here
+            }
+        });
+
+        const mailOptions = {
+            from: 'abhiram.k22@iiits.in',
+            to: email, // User's email
+            subject: 'You have joined a Realm ' + realmId,
+            text: `Hello ${username},\n\nYou have successfully joined a realm.\n\nRealm ID: ${realmId},
+                    Thanks for using CodeRealms`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error('Error sending email:', error);
+            } else {
+                console.log('Email sent:', info.response);
+            }
+        });
+
+
+
 
         res.status(200).json({ success: true, message: 'User joined the realm successfully' });
 
