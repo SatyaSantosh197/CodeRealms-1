@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Superuser Panel</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        .users-container {
+            padding: 20px;
+        }
+
+        .users-container h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .users-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .users-container button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+        }
+
+        .user-details,
+        .realm-details {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #updateUserRoleForm {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        #updateUserRoleForm label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #updateUserRoleForm select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        #updateUserRoleForm button {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        .realm-container {
+            width: 90%;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        .realm-container h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .realm-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .realm-container li {
+            margin-bottom: 10px;
+        }
+
+        .realm-container li:last-child {
+            margin-bottom: 0;
+        }
+
+        .org_display_container {
+            width: 90%;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        .organisers-container {
+            padding: 20px;
+        }
+
+        .organisers-container h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .organisers-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .organisers-container button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+        }
+
+        .organiser-button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #ff4444;
+            border: none;
+            outline: none;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            text-align: left;
+            align-items: center;
+        }
+
+        .ban-button {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #ff4444;
+            color: #ffffff;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome Superuser!</h1>
+    <div class="container">
+        <table>
+            <tr>
+                <th>
+                    <div class="users-container" id="userListContainer">
+                        <h2>All User Details:</h2>
+                        <div id="userList">
+                            <% users.forEach(user=> { %>
+                                <% if (user.role !=='superuser' ) { %>
+                                    <button class="user-button" data-user-id="<%= user._id %>">
+                                        <%= user.username %>
+                                    </button>
+                                    <% } %>
+                                        <% }); %>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="user-details-container" id="userDetailsContainer"></div>
+                    <!-- Form to update user's role -->
+                    <form id="updateUserRoleForm">
+                        <label for="role">Update User Role:</label>
+                        <select id="role" name="role">
+                            <option value="moderator">Moderator</option>
+                            <option value="superuser">Superuser</option>
+                            <option value="user">User</option>
+                        </select>
+                        <button type="submit">Update</button>
+                    </form>
+                </th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="realm-container">
+        <table>
+            <tr>
+                <th>
+                    <% realms.forEach(realm=> { %>
+                        <button class="realm-details" value="<%= realm.name %>">
+                            <h2>
+                                <%= realm.name %>
+                            </h2>
+                            <ul>
+                                <% realm.arrContests.forEach(contestId=> { %>
+                                    <% const contest=contests.find(contest=> contest._id.toString() ===
+                                        contestId.toString()); %>
+                                        <% if (contest) { %>
+                                            <li>
+                                                <%= contest.text %>
+                                            </li>
+                                            <% } %>
+                                                <% }); %>
+                            </ul>
+                        </button>
+                        <% }); %>
+                </th>
+                <th>
+                    <div id="realmDetailsContainer"></div>
+                </th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="org_display_container">
+        <div class="organisers-container" id="organiserListContainer">
+            <h2>Organisers:</h2>
+            <div id="organiserList">
+                <% organisers.forEach(organiser=> { %>
+                    <button class="organiser-button" data-organiser-id="<%= organiser._id %>"
+                        data-banned="<%= organiser.banned %>">
+                        <%= organiser.username %>
+                            <span class="ban-button">
+                                <% if (organiser.banned) { %>
+                                    Unban
+                                    <% } else { %>
+                                        Ban
+                                        <% } %>
+                            </span>
+                    </button>
+                    <% }); %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userList = document.getElementById("userList");
+            const userDetailsContainer = document.getElementById("userDetailsContainer");
+            const updateUserRoleForm = document.getElementById("updateUserRoleForm");
+            const realmDetailsContainer = document.getElementById("realmDetailsContainer");
+
+            // Function to fetch user details and display them
+            const fetchAndDisplayUserDetails = async (userId) => {
+                try {
+                    const userDetailsResponse = await fetch(`/users/${userId}`);
+                    const userDetails = await userDetailsResponse.json();
+                    const userDetailsHTML = `
+                        <div class="user-details">
+                            <h2>User Details:</h2>
+                            <p><strong>Name:</strong> ${userDetails.username}</p>
+                            <p><strong>Email:</strong> ${userDetails.email}</p>
+                            <p><strong>Role:</strong> ${userDetails.role}</p>
+                        </div>
+                    `;
+                    userDetailsContainer.innerHTML = userDetailsHTML;
+                    updateUserRoleForm.style.display = "block"; // Show the form
+                } catch (error) {
+                    console.error("Error fetching user details:", error);
+                }
+            };
+
+            // Event listener for user button clicks
+            userList.addEventListener("click", async (event) => {
+                if (event.target.classList.contains("user-button")) {
+                    // Remove the 'active' class from all buttons
+                    document.querySelectorAll(".user-button").forEach(button => {
+                        button.classList.remove("active");
+                    });
+                    // Add the 'active' class to the clicked button
+                    event.target.classList.add("active");
+                    const userId = event.target.dataset.userId;
+                    await fetchAndDisplayUserDetails(userId);
+                }
+            });
+
+            // Event listener for form submission
+            updateUserRoleForm.addEventListener("submit", async (event) => {
+                event.preventDefault(); // Prevent default form submission
+                const userId = document.querySelector(".user-button.active").dataset.userId; // Assuming you have a way to track the active user button
+                const role = document.getElementById("role").value;
+                try {
+                    // Send a POST request to the server to update the user's role
+                    const response = await fetch("/change_role", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ userId, role }),
+                    });
+                    if (response.ok) {
+                        alert("User role updated successfully!");
+                    } else {
+                        alert("Failed to update user role.");
+                    }
+                } catch (error) {
+                    console.error("Error updating user role:", error);
+                    alert("An error occurred while updating user role.");
+                }
+            });
+
+            // Hide the form initially
+            updateUserRoleForm.style.display = "none";
+
+            const banButtons = document.querySelectorAll(".organiser-button .ban-button");
+
+            banButtons.forEach(button => {
+                button.addEventListener("click", async () => {
+                    const organiserId = button.parentElement.dataset.organiserId;
+                    const banned = button.parentElement.dataset.banned === "true";
+
+                    try {
+                        const response = await fetch(`/organisers/${organiserId}/ban`, {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ banned: !banned }), // Toggle the banned status
+                        });
+
+                        if (response.ok) {
+                            // Update the button text
+                            button.textContent = banned ? "Ban" : "Unban";
+                            button.parentElement.dataset.banned = !banned;
+                            alert(`Organiser ${banned ? "unbanned" : "banned"} successfully.`);
+                        } else {
+                            alert("Failed to update organiser status.");
+                        }
+                    } catch (error) {
+                        console.error("Error updating organiser status:", error);
+                        alert("An error occurred while updating organiser status.");
+                    }
+                });
+            });
+
+
+
+            // Function to show realm details
+            // Function to show realm details
+            function showRealmDetails(realmName) {
+                // Clear previous details
+                realmDetailsContainer.innerHTML = "";
+                try {
+                    // Fetch realm details from the server
+                    fetch(`/realms/${realmName}`)
+                        .then(response => response.json())
+                        .then(realmData => {
+                            // Render realm details and associated contests
+                            const realmDetailsHTML = `
+                    <h2>${realmData.name}</h2>
+                    <button class="delete-button" data-realm-id="${realmData._id}">Delete Realm</button>
+                    <ul>
+                        ${realmData.contests.map(contest => `
+                            <li>
+                                <h3>${contest.name}</h3>
+                                <ul>
+                                    ${contest.problems.map(problem => `
+                                        <li>${problem.question}</li>
+                                    `).join('')}
+                                </ul>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+
+                            realmDetailsContainer.innerHTML = realmDetailsHTML;
+
+                            // Add event listener to the delete realm button
+                            const deleteButton = realmDetailsContainer.querySelector('.delete-button');
+                            deleteButton.addEventListener('click', async () => {
+                                const confirmation = confirm("Are you sure you want to delete this realm?");
+                                if (confirmation) {
+                                    const realmId = deleteButton.dataset.realmId;
+                                    try {
+                                        const response = await fetch(`/realms/${realmId}`, {
+                                            method: "DELETE"
+                                        });
+                                        if (response.ok) {
+                                            alert("Realm deleted successfully!");
+                                            // Optionally, you can remove the deleted realm from the UI
+                                            realmDetailsContainer.innerHTML = "";
+                                        } else {
+                                            alert("Failed to delete realm.");
+                                        }
+                                    } catch (error) {
+                                        console.error("Error deleting realm:", error);
+                                        alert("An error occurred while deleting the realm.");
+                                    }
+                                }
+                            });
+                        })
+                        .catch(error => {
+                            console.error("Error fetching realm details:", error);
+                        });
+                } catch (error) {
+                    console.error("Error fetching realm details:", error);
+                }
+            }
+
+            // Event listener for realm-details buttons
+            const realmButtons = document.querySelectorAll(".realm-details");
+            realmButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const realmName = button.value;
+                    showRealmDetails(realmName);
+                });
+            });
+
+
+
+
+
+        });
+    </script>
+</body>
+
+</html>

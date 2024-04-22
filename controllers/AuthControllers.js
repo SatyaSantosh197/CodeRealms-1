@@ -10,7 +10,7 @@ exports.signup = async (req, res) => {
         // Create a new User document
         const newUser = new User({ username, password, email });
         await newUser.save();
-        
+
 
         console.log("User records inserted successfully");
         res.redirect('/signin');
@@ -44,11 +44,44 @@ exports.signin = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ username: user.username }, 'coderealm_secret_code');
+        const token = jwt.sign({ username: user.username, role : user.role }, 'coderealm_secret_code');
 
-        console.log("User signed in successfully");
-        res.cookie('userjwt', token, { httpOnly: true }); // Set JWT token in a cookie named 'userjwt'
-        res.redirect('/home');
+
+
+        // Check if the user is an moderator
+        if (user.role === 'moderator') {
+
+            res.cookie('superjwt', token, { httpOnly: true });
+            // Send an alert for moderator
+            return res.send(`
+        <script>
+          window.location.href = '/moderator_panel?moderator=true';
+          alert("Welcome, moderator!");
+        </script>
+      `);
+        }
+        // Check if the user is a superuser
+        else if (user.role === 'superuser') {
+
+            res.cookie('superjwt', token, { httpOnly: true });
+            // Send an alert for superuser
+            return res.send(`
+        <script>
+          window.location.href = '/superuser_panel?superuser=true';
+          alert("Welcome, superuser!");
+        </script>
+      `);
+        }
+        else {
+            console.log("User signed in successfully");
+            res.cookie('userjwt', token, { httpOnly: true }); // Set JWT token in a cookie named 'userjwt'
+            res.redirect('/home');
+        }
+
+
+
+
+
     } catch (error) {
         console.error('Error:', error.message);
         res.status(500).json({ error: 'Internal server error' });

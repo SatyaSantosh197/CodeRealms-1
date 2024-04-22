@@ -123,6 +123,10 @@ router.post('/create-realm', async (req, res) => {
             return res.status(404).json({ success: false, message: 'Organiser not found' });
         }
 
+        if (organizer.banned) {
+            return res.status(403).json({ success: false, message: 'Organiser is banned. Cannot create realm.' });
+        }
+
         const { name, contests, problems } = req.body;
 
         const contestIds = [];

@@ -86,8 +86,6 @@ router.post("/join_realm", async (req, res) => {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-
-
         // Add the realm ID to the user's realmIds array
         user.realmIds.push(realmId);
         // Save the updated user object back to the database

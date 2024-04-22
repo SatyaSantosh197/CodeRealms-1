@@ -91,7 +91,10 @@ const UserSchema = new mongoose.Schema({
         { 
             type: mongoose.Schema.Types.ObjectId, ref: 'Contest' 
         }
-    ]
+    ],
+    role : {
+        type : String, enum:['user','moderator','superuser'], default : 'user'
+    }
 
 
 });
