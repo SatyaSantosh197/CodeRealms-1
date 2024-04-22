@@ -8,8 +8,9 @@
 
 body{
 font-family: 'Courier New', Courier, monospace;
-color: white;
+color: black;
 } 
+
 .navBar{
     background: transparent;
     color:rgb(99, 165, 0);

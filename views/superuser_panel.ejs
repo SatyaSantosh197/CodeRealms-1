@@ -407,7 +407,7 @@
                             // Render realm details and associated contests
                             const realmDetailsHTML = `
                     <h2>${realmData.name}</h2>
-                    <button class="delete-button" data-realm-id="${realmData._id}">Delete Realm</button>
+                    <button class="delete-button" value="${realmData._id}">Delete Realm</button>
                     <ul>
                         ${realmData.contests.map(contest => `
                             <li>
@@ -429,7 +429,8 @@
                             deleteButton.addEventListener('click', async () => {
                                 const confirmation = confirm("Are you sure you want to delete this realm?");
                                 if (confirmation) {
-                                    const realmId = deleteButton.dataset.realmId;
+                                    const realmId = deleteButton.value;
+                                    console.log(realmId);
                                     try {
                                         const response = await fetch(`/realms/${realmId}`, {
                                             method: "DELETE"
