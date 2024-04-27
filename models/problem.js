@@ -1,10 +1,25 @@
 const mongoose = require('mongoose');
 
 const problemSchema = new mongoose.Schema({
-    question: String,
-    testcase: [String], // Array of test cases
-    rating: Number,
-    points: Number
+
+
+    text: String,
+    difficulty: String,
+    QuestionScore: Number,
+    QuestionId: String,
+    QuestionInputFormat: String,
+    QuestionOutputFormat: String,
+    QuestionTestInput01: String,
+    QuestionTestInput02: String,
+    QuestionTestInput03: String,
+    QuestionTestOutput01: String,
+    QuestionTestOutput02: String,
+    QuestionTestOutput03: String,
+    QuestionTitle: String,
+    runMemoryLimit: String,
+    runTimeout: Number
+
+
 });
 
 const Problem = mongoose.model('Problem', problemSchema);

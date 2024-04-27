@@ -106,7 +106,6 @@ function generateRealmId(name) {
 
 router.post('/create-realm', async (req, res) => {
     try {
-
         const token = req.cookies.jwt;
 
         if (!token) {
@@ -132,31 +131,27 @@ router.post('/create-realm', async (req, res) => {
         const contestIds = [];
         const problemIds = [];
 
-        // Create contests and problems, and collect their IDs
-        for (const contestData of contests) {
-            // Create contest
-            const contest = await Contest.create({
-                text: contestData.name,
-                badge: {}
+        // Create problems and collect their IDs
+        for (const problemData of problems) {
+            const problem = await Problem.create({
+                text: problemData.text,
+                difficulty: problemData.difficulty,
+                QuestionScore: problemData.QuestionScore,
+                QuestionId: problemData.QuestionId,
+                QuestionInputFormat: problemData.QuestionInputFormat,
+                QuestionOutputFormat: problemData.QuestionOutputFormat,
+                QuestionTestInput01: problemData.QuestionTestInput01,
+                QuestionTestInput02: problemData.QuestionTestInput02,
+                QuestionTestInput03: problemData.QuestionTestInput03,
+                QuestionTestOutput01: problemData.QuestionTestOutput01,
+                QuestionTestOutput02: problemData.QuestionTestOutput02,
+                QuestionTestOutput03: problemData.QuestionTestOutput03,
+                QuestionTitle: problemData.QuestionTitle,
+                runMemoryLimit: problemData.runMemoryLimit,
+                runTimeout: problemData.runTimeout,
             });
 
-            contestIds.push(contest._id);
-
-            // Create problems for the contest
-            const contestProblems = [];
-            for (const problemData of contestData.problems) {
-                const problem = await Problem.create({
-                    question: problemData.question,
-                    rating: problemData.rating,
-                    points: problemData.points,
-                });
-
-                problemIds.push(problem._id);
-                contestProblems.push(problem._id);
-            }
-
-            // Update contest with problem IDs
-            await Contest.findByIdAndUpdate(contest._id, { arrproblem: contestProblems });
+            problemIds.push(problem._id);
         }
 
         // Create a new realm
@@ -177,6 +172,7 @@ router.post('/create-realm', async (req, res) => {
         res.status(500).json({ success: false, message: 'Failed to create realm' });
     }
 });
+
 
 
 
