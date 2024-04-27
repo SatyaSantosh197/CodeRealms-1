@@ -131,27 +131,43 @@ router.post('/create-realm', async (req, res) => {
         const contestIds = [];
         const problemIds = [];
 
-        // Create problems and collect their IDs
-        for (const problemData of problems) {
-            const problem = await Problem.create({
-                text: problemData.text,
-                difficulty: problemData.difficulty,
-                QuestionScore: problemData.QuestionScore,
-                QuestionId: problemData.QuestionId,
-                QuestionInputFormat: problemData.QuestionInputFormat,
-                QuestionOutputFormat: problemData.QuestionOutputFormat,
-                QuestionTestInput01: problemData.QuestionTestInput01,
-                QuestionTestInput02: problemData.QuestionTestInput02,
-                QuestionTestInput03: problemData.QuestionTestInput03,
-                QuestionTestOutput01: problemData.QuestionTestOutput01,
-                QuestionTestOutput02: problemData.QuestionTestOutput02,
-                QuestionTestOutput03: problemData.QuestionTestOutput03,
-                QuestionTitle: problemData.QuestionTitle,
-                runMemoryLimit: problemData.runMemoryLimit,
-                runTimeout: problemData.runTimeout,
+        // Create contests and collect their IDs
+        for (const contestData of contests) {
+            // Create contest
+            const contest = await Contest.create({
+                text: contestData.name,
             });
 
-            problemIds.push(problem._id);
+            contestIds.push(contest._id);
+
+            // Create problems for the contest
+            const contestProblems = [];
+            for (const problemData of contestData.problems) {
+                // Create problem
+                const problem = await Problem.create({
+                    text: problemData.text,
+                    difficulty: problemData.difficulty,
+                    QuestionScore: problemData.QuestionScore,
+                    QuestionId: problemData.QuestionId,
+                    QuestionInputFormat: problemData.QuestionInputFormat,
+                    QuestionOutputFormat: problemData.QuestionOutputFormat,
+                    QuestionTestInput01: problemData.QuestionTestInput01,
+                    QuestionTestInput02: problemData.QuestionTestInput02,
+                    QuestionTestInput03: problemData.QuestionTestInput03,
+                    QuestionTestOutput01: problemData.QuestionTestOutput01,
+                    QuestionTestOutput02: problemData.QuestionTestOutput02,
+                    QuestionTestOutput03: problemData.QuestionTestOutput03,
+                    QuestionTitle: problemData.QuestionTitle,
+                    runMemoryLimit: problemData.runMemoryLimit,
+                    runTimeout: problemData.runTimeout
+                });
+
+                problemIds.push(problem._id);
+                contestProblems.push(problem._id);
+            }
+
+            // Update contest with problem IDs
+            await Contest.findByIdAndUpdate(contest._id, { arrproblem: contestProblems });
         }
 
         // Create a new realm
