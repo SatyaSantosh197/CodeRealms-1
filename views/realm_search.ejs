@@ -325,6 +325,7 @@
                     if (response.ok) {
                         console.log('User joined the realm successfully');
                         // Handle success (if needed)
+                        window.location.href = '/home';
                     } else {
                         throw new Error('Failed to join realm');
                     }
