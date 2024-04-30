@@ -18,7 +18,7 @@ exports.create_problem = async (req, res) => {
 exports.update_contest = async (req, res) => {
     try {
         const { contestName, problemId } = req.body;
-        await Contest.findOneAndUpdate({ text: contestName }, { $push: { arrProblems: problemId } });
+        await Contest.findOneAndUpdate({ text: contestName }, { $push: { arrproblems: problemId } });
         res.sendStatus(200);
     } catch (error) {
         console.error(error);

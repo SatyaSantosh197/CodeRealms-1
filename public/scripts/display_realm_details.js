@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             // Add event listener to the "Add Problem" button
                             addButton.addEventListener('click', function () {
                                 const contestName = addButton.getAttribute('value'); // Retrieve the contest name from the button
-                                createProblemForm(rightUpperDiv);
+                                createProblemForm(rightUpperDiv ,  realmName , contestName); 
                             });
                         });
                     } else {
@@ -177,147 +177,150 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // Function to create a form for adding a new problem
-    function createProblemForm(container) {
-        // Clear the container first
-        container.innerHTML = '';
+// Inside the createProblemForm function
+function createProblemForm(container, realmName, contestName) {
 
-        // Create the form element
-        const problemForm = document.createElement('form');
-        problemForm.classList.add('problem-form');
+    console.log('Realm Name:', realmName);
+    console.log('Contest Name:', contestName);
+    // Clear the container first
+    container.innerHTML = '';
 
-        // Create inputs for problem details
-        const problemInputs = [
-            'text',
-            'difficulty',
-            { name: 'QuestionScore', type: 'number' }, // Specify type as 'number' for numeric input
-            'QuestionId',
-            'QuestionInputFormat',
-            'QuestionOutputFormat',
-            'QuestionTestInput01',
-            'QuestionTestInput02',
-            'QuestionTestInput03',
-            'QuestionTestOutput01',
-            'QuestionTestOutput02',
-            'QuestionTestOutput03',
-            'QuestionTitle',
-            'runMemoryLimit',
-            { name: 'runTimeout', type: 'number' } // Specify type as 'number' for numeric input
-        ];
-        
-        problemInputs.forEach(input => {
-            const label = document.createElement('label');
-            label.textContent = input.name ? input.name + ':' : input + ':';
-            const inputElement = document.createElement('input');
-            inputElement.setAttribute('type', input.type || 'text'); // Set input type
-            inputElement.setAttribute('placeholder', 'Enter ' + (input.name || input));
-            inputElement.setAttribute('required', '');
-            inputElement.setAttribute('name', input.name || input);
-            problemForm.appendChild(label);
-            problemForm.appendChild(inputElement);
-        });
+    // Create the form element
+    const problemForm = document.createElement('form');
+    problemForm.classList.add('problem-form');
 
-        // Create a submit button
-        const submitButton = document.createElement('button');
-        submitButton.setAttribute('type', 'submit');
-        submitButton.textContent = 'Submit';
-
-        // Add event listener to form submission
-        problemForm.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            // Retrieve problem details from the form
-            const formData = new FormData(problemForm);
-            const problemDetails = {};
-            for (let [key, value] of formData.entries()) {
-                problemDetails[key] = value;
-            }
-
-            // Send problem data to the server to create a new problem
-            fetch('/create-problem', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(problemDetails)
-            })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Failed to create problem');
-                    }
-                })
-                .then(createdProblem => {
-                    // Update contest and realm with the newly created problem's ID
-                    updateContestAndRealm(createdProblem);
-                })
-                .catch(error => {
-                    console.error(error); // Handle error
-                    // Show error message
-                });
-        });
-
-        // Append the submit button to the form
-        problemForm.appendChild(submitButton);
-
-        // Append the form to the container
-        container.appendChild(problemForm);
-    }
-
-    // Function to update contest and realm with the newly created problem's ID
-    function updateContestAndRealm(createdProblem) {
-        // Get the contest and realm names from the form or any other source
-        const contestName = ''; // Replace with the contest name
-        const realmName = ''; // Replace with the realm name
-
-        // Update contest with the new problem ID
-        fetch('/update-contest', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ contestName, problemId: createdProblem._id })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to update contest with problem ID');
-                }
-            })
-            .catch(error => {
-                console.error(error); // Handle error
-                // Show error message
-            });
-
-        // Update realm with the new problem ID
-        fetch('/update-realm', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ realmName, problemId: createdProblem._id })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to update realm with problem ID');
-                }
-            })
-            .catch(error => {
-                console.error(error); // Handle error
-                // Show error message
-            });
-    }
-
-    // Add event listener to the "Add Problem" button
-    dropdownContainer.addEventListener('click', function (event) {
-        if (event.target && event.target.classList.contains('add-problem-button')) {
-            // Clear the right-upper section
-            clearRightUpper();
-
-            // Create problem form
-            createProblemForm(rightUpperDiv);
-        }
+    // Create inputs for problem details
+    const problemInputs = [
+        'text',
+        'difficulty',
+        { name: 'QuestionScore', type: 'number' }, // Specify type as 'number' for numeric input
+        'QuestionId',
+        'QuestionInputFormat',
+        'QuestionOutputFormat',
+        'QuestionTestInput01',
+        'QuestionTestInput02',
+        'QuestionTestInput03',
+        'QuestionTestOutput01',
+        'QuestionTestOutput02',
+        'QuestionTestOutput03',
+        'QuestionTitle',
+        'runMemoryLimit',
+        { name: 'runTimeout', type: 'number' } // Specify type as 'number' for numeric input
+    ];
+    
+    problemInputs.forEach(input => {
+        const label = document.createElement('label');
+        label.textContent = input.name ? input.name + ':' : input + ':';
+        const inputElement = document.createElement('input');
+        inputElement.setAttribute('type', input.type || 'text'); // Set input type
+        inputElement.setAttribute('placeholder', 'Enter ' + (input.name || input));
+        inputElement.setAttribute('required', '');
+        inputElement.setAttribute('name', input.name || input);
+        problemForm.appendChild(label);
+        problemForm.appendChild(inputElement);
     });
+
+    // Create a submit button
+    const submitButton = document.createElement('button');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.textContent = 'Submit';
+
+    // Add event listener to form submission
+    problemForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Retrieve problem details from the form
+        const formData = new FormData(problemForm);
+        const problemDetails = {};
+        for (let [key, value] of formData.entries()) {
+            problemDetails[key] = value;
+        }
+
+        // Send problem data to the server to create a new problem
+        fetch('/create-problem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(problemDetails)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to create problem');
+                }
+            })
+            .then(createdProblem => {
+                // Update contest and realm with the newly created problem's ID
+                updateContestAndRealm(createdProblem, realmName, contestName);
+            })
+            .catch(error => {
+                console.error(error); // Handle error
+                // Show error message
+            });
+    });
+
+    // Append the submit button to the form
+    problemForm.appendChild(submitButton);
+
+    // Append the form to the container
+    container.appendChild(problemForm);
+}
+
+
+// Inside the updateContestAndRealm function
+function updateContestAndRealm(createdProblem, realmName, contestName) {
+    // Update contest with the new problem ID
+    fetch('/update-contest', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ contestName, problemId: createdProblem._id })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update contest with problem ID');
+            }
+        })
+        .catch(error => {
+            console.error(error); // Handle error
+            // Show error message
+        });
+
+    // Update realm with the new problem ID
+    fetch('/update-realm', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ realmName, problemId: createdProblem._id })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update realm with problem ID');
+            }
+        })
+        .catch(error => {
+            console.error(error); // Handle error
+            // Show error message
+        });
+}
+
+dropdownContainer.addEventListener('click', function (event) {
+    if (event.target && event.target.classList.contains('add-problem-button')) {
+        // Clear the right-upper section
+        clearRightUpper();
+
+        // Get the realm name from the clicked button
+        const realmName = event.target.value;
+        
+        // Create problem form with the obtained realmName
+        createProblemForm(rightUpperDiv, realmName);
+    }
+});
+
 
 
 
