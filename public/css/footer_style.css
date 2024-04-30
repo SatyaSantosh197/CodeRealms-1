@@ -1,14 +1,9 @@
 body {
-    margin: 0;
     background: linear-gradient(#1e152e, #161616);
     /* font-family: "Euclid Circular A", "Poppins"; */
     color: #d6dfed;
 }
 
-/* html,
-body {
-    height: 100%;
-} */
 
 .background {
     position: absolute;
@@ -77,7 +72,7 @@ section {
     width: 100%;
 }
 
-@media (min-width: 420px) {
+@media (min-width: 230px) {
     section {
         align-items: center;
         padding-left: 0;
