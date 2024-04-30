@@ -3,10 +3,11 @@ const express = require('express');
 const router = express.Router();
 const RealmController = require('../controllers/RealmController');
 
-// Define routes for realm operations
-router.post('/', RealmController.createRealm);
-router.get('/:id', RealmController.getRealmById);
-router.put('/:id', RealmController.updateRealm);
-router.delete('/:id', RealmController.deleteRealm);
+
+router.post('/create-problem', RealmController.create_problem);
+router.post('/update-contest', RealmController.update_contest);
+router.post('/update-realm', RealmController.update_realm);
+
+
 
 module.exports = router;

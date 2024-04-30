@@ -5,6 +5,7 @@ const path = require('path');
 const authRoutes = require('./routes/authroutes'); 
 const organiserRoutes = require('./routes/organiserRoutes');
 const userRoutes = require('./routes/UserRoutes');
+const realmRoutes = require('./routes/realmRoutes');
 
 const cookieParser = require('cookie-parser');
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use("/", authRoutes); 
 app.use("/", organiserRoutes);
 app.use("/", userRoutes);
+app.use("/", realmRoutes);
 
 const PORT = 8000;
 app.listen(PORT, () => {

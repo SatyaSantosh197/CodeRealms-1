@@ -11,7 +11,6 @@ exports.signup = async (req, res) => {
         const newUser = new User({ username, password, email });
         await newUser.save();
 
-
         console.log("User records inserted successfully");
         res.redirect('/signin');
     } catch (error) {

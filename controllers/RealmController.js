@@ -1,57 +1,38 @@
 // controllers/RealmController.js
 const Realm = require('../models/realm');
+const Problem = require('../models/problem');
+const Contest = require('../models/contest');
+const express = require('express');
 
-exports.createRealm = async (req, res) => {
+exports.create_problem = async (req, res) => {
     try {
-        const { arrcontest, arrproblem, text } = req.body;
-        const newRealm = new Realm({ arrcontest, arrproblem, text });
-        const savedRealm = await newRealm.save();
-        res.status(201).json(savedRealm);
+        const newProblem = new Problem(req.body);
+        await newProblem.save();
+        res.status(201).json(newProblem);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ message: 'Failed to create problem' });
     }
-};
+}
 
-exports.getRealmById = async (req, res) => {
+exports.update_contest = async (req, res) => {
     try {
-        const { id } = req.params;
-        const realm = await Realm.findById(id);
-        if (!realm) {
-            return res.status(404).json({ error: 'Realm not found' });
-        }
-        res.status(200).json(realm);
+        const { contestName, problemId } = req.body;
+        await Contest.findOneAndUpdate({ text: contestName }, { $push: { arrProblems: problemId } });
+        res.sendStatus(200);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ message: 'Failed to update contest with problem ID' });
     }
-};
+}
 
-exports.updateRealm = async (req, res) => {
+exports.update_realm = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { arrcontest, arrproblem, text } = req.body;
-        const updatedRealm = await Realm.findByIdAndUpdate(id, { arrcontest, arrproblem, text }, { new: true });
-        if (!updatedRealm) {
-            return res.status(404).json({ error: 'Realm not found' });
-        }
-        res.status(200).json(updatedRealm);
+        const { realmName, problemId } = req.body;
+        await Realm.findOneAndUpdate({ name: realmName }, { $push: { arrProblems: problemId } });
+        res.sendStatus(200);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ message: 'Failed to update realm with problem ID' });
     }
-};
-
-exports.deleteRealm = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const deletedRealm = await Realm.findByIdAndDelete(id);
-        if (!deletedRealm) {
-            return res.status(404).json({ error: 'Realm not found' });
-        }
-        res.status(200).json({ message: 'Realm deleted successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-};
+}

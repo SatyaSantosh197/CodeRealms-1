@@ -218,7 +218,6 @@ router.post('/fetch-contests', async (req, res) => {
 });
 
 
-// Route for creating a new contest
 router.post('/create-contest', async (req, res) => {
     try {
         const { realmName, contestName } = req.body;
@@ -238,7 +237,6 @@ router.post('/create-contest', async (req, res) => {
             return res.status(404).json({ success: false, message: 'Realm not found' });
         }
 
-        // Add the contest ObjectId to the realm's array of contests
         realm.arrContests.push(savedContest._id);
         await realm.save();
 
@@ -250,28 +248,32 @@ router.post('/create-contest', async (req, res) => {
 });
 
 
-// Route for updating the realm with the new contest
-router.post('/update-realm', async (req, res) => {
+// Assuming you're using Express.js for your server
+router.post('/delete-realm', async (req, res) => {
     try {
-        const { realmName, contestId } = req.body;
+        const { realmName } = req.body;
 
-        // Find the realm based on the name
-        const realm = await Realm.findOne({ name: realmName });
+        console.log('Deleting realm:', realmName);
+        // Find the realm by name
+        const realm = await Realm.findOne({ name: realmName }).exec();
 
-        if (!realm) {
-            return res.status(404).json({ success: false, message: 'Realm not found' });
-        }
+        // Delete associated contests
+        await Contest.deleteMany({ _id: { $in: realm.arrContests } }).exec();
 
-        // Add the contest ObjectId to the realm's array of contests
-        realm.arrContests.push(contestId);
-        await realm.save();
+        // Delete associated problems
+        await Problem.deleteMany({ _id: { $in: realm.arrProblems } }).exec();
 
-        res.status(200).json({ success: true, message: 'Realm updated successfully' });
+        // Delete the realm
+        await realm.deleteOne();
+        // Respond with success status
+        res.sendStatus(200);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Failed to update realm' });
+        res.status(500).send('Failed to delete realm');
     }
 });
+
+
 
 
 

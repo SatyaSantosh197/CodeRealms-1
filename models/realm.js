@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Organiser = require('./organiser');
 
+const Contest = require('./contest');
+const Problem = require('./problem');
+
 const realmSchema = new mongoose.Schema({
     realmeId: { type: String, required: true },
     name: { type: String, ref: 'Organiser', required: true },

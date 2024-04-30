@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Problem = require('./problem');
 
 const contestSchema = new mongoose.Schema({
     arrproblem: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Problem' }],

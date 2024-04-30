@@ -903,3 +903,85 @@ border-radius: 10px;
     background-color: #0b0;
 }
 
+
+
+
+/* Styling for realm container */
+/* .realm-container {
+  margin-bottom: 20px;
+} */
+
+/* Styling for contest container */
+ /* .contest-container {
+  margin-top: 10px;
+}  */
+
+/* Styling for contest element */
+.contest-element {
+  margin-bottom: 5px;
+}
+
+/* Styling for "Add Problem" button */
+.add-problem-button {
+  margin-left: 10px;
+  background-color: #007bff; /* Change the button color as needed */
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-problem-button:hover {
+  background-color: #0056b3; /* Darker color on hover */
+}
+
+/* Styling for "Add New Contest" button */
+.add-new-contest-button {
+  margin-top: 10px;
+  background-color: #28a745; /* Change the button color as needed */
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-new-contest-button:hover {
+  background-color: #218838; /* Darker color on hover */
+}
+
+/* Styling for create contest form */
+.create-contest-form {
+  margin-top: 10px;
+}
+
+/* Styling for form labels */
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Styling for form input fields */
+input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ced4da; /* Set border color */
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Styling for form submit button */
+[type="submit"] {
+  background-color: #007bff; /* Change the button color as needed */
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+[type="submit"]:hover {
+  background-color: #0056b3; /* Darker color on hover */
+}
