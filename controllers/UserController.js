@@ -306,22 +306,21 @@ exports.postBookmark = async (req, res) => {
 
 exports.deleteBookmark = async (req, res) => {
     try {
-        const { questionText } = req.body;
+        const { bookmarkId } = req.body;
 
         // Find the bookmark to delete
-        const bookmark = await Bookmark.findOne({ questionTitle: questionText });
+        const bookmark = await Bookmark.findById(bookmarkId);
         if (!bookmark) {
             return res.status(404).json({ message: 'Bookmark not found' });
         }
 
         // Remove the reference to the bookmark from the user's bookmarkIds array
         const user = await User.findOneAndUpdate(
-            { bookmarkIds: bookmark._id },
-            { $pull: { bookmarkIds: bookmark._id } },
+            { bookmarkIds: bookmarkId },
+            { $pull: { bookmarkIds: bookmarkId } },
             { new: true }
         );
 
-        // Check if the user exists and the bookmark reference was successfully removed
         if (!user) {
             return res.status(404).json({ message: 'User not found or bookmark reference not present' });
         }
