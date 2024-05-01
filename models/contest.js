@@ -8,7 +8,9 @@ const contestSchema = new mongoose.Schema({
     badge: {
         png: { data: Buffer, contentType: String },
         id: String
-    }
+    },
+    startdate : Date ,
+    enddate : Date
 });
 
 contestSchema.pre('remove', async function(next) {

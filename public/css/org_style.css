@@ -930,6 +930,7 @@ border-radius: 10px;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
+  /* float: right; */
 }
 
 .add-problem-button:hover {

@@ -136,6 +136,8 @@ router.post('/create-realm', async (req, res) => {
             // Create contest
             const contest = await Contest.create({
                 text: contestData.name,
+                startdate: contestData.startdate,
+                enddate: contestData.enddate
             });
 
             contestIds.push(contest._id);
@@ -200,17 +202,20 @@ router.post('/fetch-contests', async (req, res) => {
         // Find the realm based on the name
         const realm = await Realm.findOne({ name: realmName }).populate({
             path: 'arrContests',
-            select: 'text' // Select only the text field (contest name)
         });
 
         if (!realm) {
             return res.status(404).json({ success: false, message: 'Realm not found' });
         }
 
-        // Extract contest names from the realm
-        const contestNames = realm.arrContests.map(contest => contest.text);
+        // Extract contest names, start dates, and end dates from the realm
+        const contests = realm.arrContests.map(contest => ({
+            name: contest.text,
+            startdate : contest.startdate,
+            enddate : contest.enddate
+        }));
 
-        res.status(200).json({ success: true, contestNames });
+        res.status(200).json({ success: true, contests });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: 'Failed to fetch contests' });
@@ -218,13 +223,17 @@ router.post('/fetch-contests', async (req, res) => {
 });
 
 
+
+
 router.post('/create-contest', async (req, res) => {
     try {
-        const { realmName, contestName } = req.body;
+        const { realmName, contestName ,startdate ,enddate } = req.body;
 
         // Create a new contest
         const newContest = new Contest({
-            text: contestName // Assuming the contest name is stored in the 'text' field
+            text: contestName,
+            startdate : startdate,
+            enddate : enddate
         });
 
         // Save the new contest to the database

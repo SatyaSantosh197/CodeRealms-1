@@ -50,6 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 contestInputs.forEach(input => {
                     const contestName = input.querySelector('input[name="contestName"]').value;
                     const problemInputs = input.querySelectorAll('.problem-input');
+                    const startDate = input.querySelector('input[name="startDate"]').value;
+                    const endDate = input.querySelector('input[name="endDate"]').value;
                     const contestProblems = [];
 
                     problemInputs.forEach(problemInput => {
@@ -77,7 +79,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     const contest = {
                         name: contestName,
-                        problems: contestProblems
+                        problems: contestProblems,
+                        startdate : startDate,
+                        enddate : endDate
                     };
                     contests.push(contest);
                 });
@@ -128,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function createContestInput(container) {
         const contestDiv = document.createElement('div');
         contestDiv.classList.add('contest-input');
-
+    
         const contestLabel = document.createElement('label');
         contestLabel.textContent = 'Contest Name:';
         const contestNameInput = document.createElement('input');
@@ -136,19 +140,40 @@ document.addEventListener('DOMContentLoaded', function () {
         contestNameInput.setAttribute('placeholder', 'Enter contest name');
         contestNameInput.setAttribute('required', '');
         contestNameInput.setAttribute('name', 'contestName');
-
+    
+        // Start Date input
+        const startDateLabel = document.createElement('label');
+        startDateLabel.textContent = 'Start Date:';
+        const startDateInput = document.createElement('input');
+        startDateInput.setAttribute('type', 'date');
+        startDateInput.setAttribute('required', '');
+        startDateInput.setAttribute('name', 'startDate');
+    
+        // End Date input
+        const endDateLabel = document.createElement('label');
+        endDateLabel.textContent = 'End Date:';
+        const endDateInput = document.createElement('input');
+        endDateInput.setAttribute('type', 'date');
+        endDateInput.setAttribute('required', '');
+        endDateInput.setAttribute('name', 'endDate');
+    
         const addProblemButton = document.createElement('button');
         addProblemButton.textContent = 'Add Problem';
         addProblemButton.addEventListener('click', function () {
             createProblemInput(contestDiv);
         });
-
+    
         contestDiv.appendChild(contestLabel);
         contestDiv.appendChild(contestNameInput);
+        contestDiv.appendChild(startDateLabel);
+        contestDiv.appendChild(startDateInput);
+        contestDiv.appendChild(endDateLabel);
+        contestDiv.appendChild(endDateInput);
         contestDiv.appendChild(addProblemButton);
-
+    
         container.appendChild(contestDiv);
     }
+    
 
     function createProblemInput(container) {
         const problemDiv = document.createElement('div');

@@ -48,15 +48,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     contestContainer.classList.add('contest-container');
 
                     // Check if contests are available
-                    if (data.contestNames && data.contestNames.length > 0) {
+                    if (data.contests && data.contests.length > 0) {
                         // Iterate over fetched contest names and create elements to display them
-                        data.contestNames.forEach(contestName => {
+                        data.contests.forEach(contest => {
                             const contestElement = document.createElement('div');
                             const addButton = document.createElement('button'); // Create the "Add Problem" button
                             addButton.textContent = 'Add Problem'; // Set button text
                             addButton.classList.add('add-problem-button'); // Add a class to style the button if needed
-                            addButton.setAttribute('value', contestName); // Set the contest name as the value attribute
-                            contestElement.textContent = `- ${contestName}`; // Display contest name
+                            addButton.setAttribute('value', contest.name); // Set the contest name as the value attribute
+
+                            // Convert startdate and enddate to Date objects
+                            const startDate = new Date(contest.startdate);
+                            const endDate = new Date(contest.enddate);
+
+                            // Format dates as desired (e.g., 'MM/DD/YYYY HH:MM')
+                            const startDateString = startDate.toLocaleString(); // Adjust format as needed
+                            const endDateString = endDate.toLocaleString(); // Adjust format as needed
+
+                            contestElement.textContent = `- ${contest.name} (Start: ${startDateString}, End: ${endDateString})`;
                             contestElement.appendChild(addButton); // Append the button to the contest element
                             contestContainer.appendChild(contestElement); // Append the contest element to the container
 
@@ -66,6 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 createProblemForm(rightUpperDiv, realmName, contestName);
                             });
                         });
+
+
                     } else {
                         const noContestsElement = document.createElement('p');
                         noContestsElement.textContent = 'No contests found for this realm.';
@@ -101,18 +112,32 @@ document.addEventListener('DOMContentLoaded', function () {
                         nameInput.setAttribute('placeholder', 'Enter contest name');
                         nameInput.setAttribute('required', '');
 
+                        // Create inputs for startdate and enddate
+                        const startDateLabel = document.createElement('label');
+                        startDateLabel.textContent = 'Start Date:';
+                        const startDateInput = document.createElement('input');
+                        startDateInput.setAttribute('type', 'Date');
+                        startDateInput.setAttribute('required', '');
+
+                        const endDateLabel = document.createElement('label');
+                        endDateLabel.textContent = 'End Date:';
+                        const endDateInput = document.createElement('input');
+                        endDateInput.setAttribute('type', 'Date');
+                        endDateInput.setAttribute('required', '');
+
                         // Create a button to submit the form
                         const submitButton = document.createElement('button');
                         submitButton.setAttribute('type', 'submit');
                         submitButton.textContent = 'Create Contest';
 
-                        // Add event listener to form submission
                         // Inside the createContestForm.addEventListener('submit') event listener
                         createContestForm.addEventListener('submit', function (event) {
                             event.preventDefault();
 
-                            // Retrieve contest name from the form
+                            // Retrieve contest details from the form
                             const contestName = nameInput.value;
+                            const startdate = startDateInput.value;
+                            const enddate = endDateInput.value;
 
                             // Send contest data to the server to create a new contest
                             fetch('/create-contest', {
@@ -120,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify({ realmName, contestName })
+                                body: JSON.stringify({ realmName, contestName, startdate, enddate })
                             })
                                 .then(response => {
                                     if (response.ok) {
@@ -136,15 +161,19 @@ document.addEventListener('DOMContentLoaded', function () {
                                 });
                         });
 
-
                         // Append inputs and submit button to the form
                         createContestForm.appendChild(nameLabel);
                         createContestForm.appendChild(nameInput);
+                        createContestForm.appendChild(startDateLabel);
+                        createContestForm.appendChild(startDateInput);
+                        createContestForm.appendChild(endDateLabel);
+                        createContestForm.appendChild(endDateInput);
                         createContestForm.appendChild(submitButton);
 
                         // Append the form to the right-upper section
                         rightUpperDiv.appendChild(createContestForm);
                     });
+
                 } else {
                     throw new Error(data.message || 'Failed to fetch contests');
                 }
@@ -269,8 +298,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(createdProblem => {
                     // Update contest and realm with the newly created problem's ID
                     updateContestAndRealm(createdProblem, realmName, contestName);
-                    window.location.reload();
-
 
                 })
                 .catch(error => {
