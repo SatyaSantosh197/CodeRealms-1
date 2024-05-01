@@ -248,7 +248,17 @@ margin-right: 20px;
 margin-top:40px ;
 
 }
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb {
+  width: 26px;
+  border-radius: 30px;
+  background-clip: padding-box;
+  border: 10px solid transparent;
+}
 
+*::-webkit-scrollbar-thumb {        
+  box-shadow: inset0 0 0 10px;
+}
     .dropdown-container {
         position: relative;
         padding: 17px;
