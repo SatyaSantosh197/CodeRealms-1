@@ -31,7 +31,6 @@ exports.signup = async (req, res) => {
         }
     }
 };
-
 exports.signin = async (req, res) => {
     const { username, password } = req.body;
 
@@ -42,6 +41,10 @@ exports.signin = async (req, res) => {
             return res.status(401).json({ error: 'Invalid username or password' });
         }
 
+        if (user.banned) {
+            return res.status(403).json({ error: 'You are banned. Please contact support for further assistance.' });
+        }
+
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
@@ -49,44 +52,35 @@ exports.signin = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ username: user.username, role : user.role }, 'coderealm_secret_code');
+        const token = jwt.sign({ username: user.username, role: user.role }, 'coderealm_secret_code');
 
-
-
-        // Check if the user is an moderator
+        // Check if the user is a moderator
         if (user.role === 'moderator') {
-
             res.cookie('superjwt', token, { httpOnly: true });
             // Send an alert for moderator
             return res.send(`
-        <script>
-          window.location.href = '/moderator_panel?moderator=true';
-          alert("Welcome, moderator!");
-        </script>
-      `);
+                <script>
+                    window.location.href = '/moderator_panel?moderator=true';
+                    alert("Welcome, moderator!");
+                </script>
+            `);
         }
         // Check if the user is a superuser
         else if (user.role === 'superuser') {
-
             res.cookie('superjwt', token, { httpOnly: true });
             // Send an alert for superuser
             return res.send(`
-        <script>
-          window.location.href = '/superuser_panel?superuser=true';
-          alert("Welcome, superuser!");
-        </script>
-      `);
+                <script>
+                    window.location.href = '/superuser_panel?superuser=true';
+                    alert("Welcome, superuser!");
+                </script>
+            `);
         }
         else {
             console.log("User signed in successfully");
             res.cookie('userjwt', token, { httpOnly: true }); // Set JWT token in a cookie named 'userjwt'
             res.redirect('/home');
         }
-
-
-
-
-
     } catch (error) {
         console.error('Error:', error.message);
         res.status(500).json({ error: 'Internal server error' });

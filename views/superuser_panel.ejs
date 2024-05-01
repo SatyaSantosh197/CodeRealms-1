@@ -195,6 +195,61 @@
             align-items: center;
         }
 
+        .user_display_container {
+            width: 90%;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        .user-container {
+            padding: 20px;
+        }
+
+        .user-container h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .user-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .user-container button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+        }
+
+        .user-button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #ff4444;
+            border: none;
+            outline: none;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            text-align: left;
+            align-items: center;
+        }
+
         .ban-button {
             padding: 5px 10px;
             border-radius: 5px;
@@ -292,12 +347,36 @@
         </div>
     </div>
 
+    <div class="user_display_container">
+        <div class="user-container" id="userListContainer">
+            <h2>Users:</h2>
+            <div id="userList">
+                <% users.forEach(user=> { %>
+                    <button class="user-button" data-user-id="<%= user._id %>" data-banned="<%= user.banned %>">
+                        <%= user.username %>
+                            <span class="ban-button">
+                                <% if (user.banned) { %>
+                                    Unban
+                                    <% } else { %>
+                                        Ban
+                                        <% } %>
+                            </span>
+                    </button>
+                    <% }); %>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const userList = document.getElementById("userList");
             const userDetailsContainer = document.getElementById("userDetailsContainer");
             const updateUserRoleForm = document.getElementById("updateUserRoleForm");
             const realmDetailsContainer = document.getElementById("realmDetailsContainer");
+            const userListContainer = document.getElementById("userListContainer");
+
+            // Add event listener to handle ban/unban actions for users
 
             // Function to fetch user details and display them
             const fetchAndDisplayUserDetails = async (userId) => {
@@ -466,6 +545,35 @@
                 });
             });
 
+            userListContainer.addEventListener("click", async (event) => {
+                if (event.target.classList.contains("ban-button")) {
+                    const button = event.target;
+                    const userId = button.parentElement.dataset.userId;
+                    const banned = button.parentElement.dataset.banned === "true";
+
+                    try {
+                        const response = await fetch(`/users/${userId}/ban`, {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ banned: !banned }), // Toggle the banned status
+                        });
+
+                        if (response.ok) {
+                            // Update the button text
+                            button.textContent = banned ? "Ban" : "Unban";
+                            button.parentElement.dataset.banned = !banned;
+                            alert(`User ${banned ? "unbanned" : "banned"} successfully.`);
+                        } else {
+                            alert("Failed to update user status.");
+                        }
+                    } catch (error) {
+                        console.error("Error updating user status:", error);
+                        alert("An error occurred while updating user status.");
+                    }
+                }
+            });
 
 
 

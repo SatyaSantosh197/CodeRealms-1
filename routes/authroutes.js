@@ -96,7 +96,7 @@ router.get("/moderator_panel",async (req, res) => {
         }
 
         // Render the superuser portal page with users and reviews
-        res.render("moderator_panel", { realms, contests ,problems,organisers });
+        res.render("moderator_panel", { realms, contests ,problems,organisers , users });
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
@@ -157,6 +157,29 @@ router.put('/organisers/:organiserId/ban', async (req, res) => {
     } catch (error) {
         console.error("Error updating organiser status:", error);
         res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+router.put('/users/:userId/ban', async (req, res) => {
+    const userId = req.params.userId;
+    const { banned } = req.body;
+
+    try {
+        // Find the user by ID
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Update the banned status
+        user.banned = banned;
+        await user.save();
+
+        res.status(200).json({ message: `User ${banned ? 'banned' : 'unbanned'} successfully` });
+    } catch (error) {
+        console.error('Error:', error.message);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 

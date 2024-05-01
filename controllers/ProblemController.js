@@ -165,7 +165,7 @@ exports.renderQuestionBank = async (req, res) => {
         const problemDetails = randomProblem[0]; 
 
         // Render the EJS file with the bookmark data and problem details
-        res.render('questionBank', { bookmarks: bookmarkData, problem: problemDetails });
+        res.render('questionBank', {username, bookmarks: bookmarkData, problem: problemDetails });
 
     } catch (error) {
         console.error('Error fetching bookmarks:', error);
