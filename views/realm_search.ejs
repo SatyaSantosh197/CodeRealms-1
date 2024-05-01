@@ -15,25 +15,11 @@
     <div>
         <div class="navBar">
             <div class="logo">
-                <img src="/images/logo.png" class="logoMain">
+                <a href="/home"><img src="/images/logo.png" class="logoMain"></a>
 
             </div>
 
-            <div class="all_icons">
-                <div class="panelICon1"><ion-icon name="newspaper-outline" class="questions"
-                        id="questionicon"></ion-icon>
-                </div>
-                <div class="panel2ICon"><ion-icon name="home-outline" class="home" id="homeicon">
                     
-                </ion-icon></div>
-                <div class="panel3Icon">
-                    <ion-icon name="person-outline" class="user" id="profileicon"></ion-icon>
-
-                </div>
-
-
-
-            </div>
 
             <div class="searchAndExit">
                 <div class="searchInput">
@@ -345,6 +331,7 @@
             if (event.key === 'Enter') {
                 // Get the value from the search input
                 const searchTerm = searchInput.value;
+                console.log(searchTerm);
                 // Redirect to the realm_search page with the search term as a query parameter
                 window.location.href = `/realm_search?q=${searchTerm}`;
             }

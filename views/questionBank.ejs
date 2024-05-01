@@ -30,8 +30,8 @@
                 -->
 
         <div class="logo">
-            <img src="/images/logo.png" class="logoMain">
-            <h2>CODE BANK</h2>
+            <a href="/home"><img src="/images/logo.png" class="logoMain"></a>
+            
         </div>
 
         <div class="all_icons">
@@ -43,7 +43,7 @@
 
         <div class="searchAndExit">
             <div class="searchBar">
-                <div class="searchInput"><input type="text" placeholder="Search" class="searchi" id="realme_id"></div>
+                <div class="searchInput"><input type="text" placeholder="Search" class="searchi" id="searchInput"></div>
                 <!-- <div class="searchImage"><ion-icon name="search-outline" class="search" type="button" value="Join" id="create_realme"></ion-icon></div> -->
                 <input type="button" class="searchbit"
                     style="display: flex; background-color: transparent; border-style: none;" value="🔍"
@@ -442,6 +442,22 @@
     // Redirect to the constructed URL
     window.location.href = url;
 }
+
+
+
+const searchInput = document.getElementById('searchInput');
+
+// Add event listener for key press
+searchInput.addEventListener('keypress', function (event) {
+    // Check if Enter key is pressed
+    if (event.key === 'Enter') {
+        // Get the value from the search input
+        const searchTerm = searchInput.value;
+        console.log(searchTerm);
+        // Redirect to the realm_search page with the search term as a query parameter
+        window.location.href = `/realm_search?q=${searchTerm}`;
+    }
+});
 
 
 
