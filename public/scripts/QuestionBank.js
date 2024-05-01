@@ -156,6 +156,7 @@ function createBookmarkElement(questionText, difficulty) {
 
     return bookmarkedQuestionDiv;
 }
+
 function redirectToPage() {
     // Logic to get the question ID and redirect to the corresponding path
     const questionID = "getQuestionIDLogicHere"; // Replace with your logic to get the question ID

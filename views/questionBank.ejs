@@ -173,9 +173,11 @@
                         <div class="bookmarkedQuestion">
                             <span class="level" style="color: <%= getDifficultyColor(bookmark.difficultyColor) %>">LEVEL <%= bookmark.difficulty.toUpperCase() %></span>
                             <%= bookmark.questionTitle %>
+                            <button onclick="removeBookmark('<%= bookmark.id %>')">Remove</button>
                         </div>
                     <% }); %>
                 </div>
+                
                 
 
             </div>
@@ -435,12 +437,43 @@
             const questionID = probId; // Replace with your logic to get the question ID
             window.location.href = `/RCET/practice/${questionID}`;
         }
-        function redirectToPage(questionId) {
-    // Construct the URL using the provided questionId
-    const url = `/RCET/practice/${questionId}`;
 
-    // Redirect to the constructed URL
-    window.location.href = url;
+
+
+        //codeHere
+        function redirectToPage(questionId) {
+            // Construct the URL using the provided questionId
+            const url = `/RCET/practice/${questionId}`;
+
+
+            // Redirect to the constructed URL
+            window.location.href = url;
+        }
+
+        async function removeBookmark(bookmarkId) {
+    try {
+        // Send a DELETE request to the server to remove the bookmark
+        const response = await fetch('/bookmark', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ bookmarkId })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to delete bookmark');
+        }
+        
+        // Remove the bookmark element from the DOM
+        const bookmarkElement = document.querySelector(`.bookmarkedQuestion[data-id="${bookmarkId}"]`);
+        if (bookmarkElement) {
+            bookmarkElement.remove();
+        }
+        
+        console.log('Bookmark removed successfully');
+    } catch (error) {
+        console.error('Error removing bookmark:', error);
+    }
 }
 
 

@@ -5,6 +5,7 @@ const contestSchema = new mongoose.Schema({
     arrproblem: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Problem' }],
     text: String,
     points: Number,
+    contestId: Number,
     badge: {
         png: { data: Buffer, contentType: String },
         id: String
