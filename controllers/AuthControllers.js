@@ -2,12 +2,19 @@ const User = require('../models/User');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
+function filterEmails(emails) {
+    return emails.filter(email => /^[a-zA-Z]+\.[a-zA-Z]\d{2}@iiits\.in$/.test(email));
+}
 
 exports.signup = async (req, res) => {
     const { username, password, email } = req.body;
 
+    // Validate email format
+    if (!filterEmails([email]).length) {
+        return res.status(400).json({ error: 'Invalid email format' });
+    }
+
     try {
-        // Create a new User document
         const newUser = new User({ username, password, email });
         await newUser.save();
 
@@ -24,7 +31,6 @@ exports.signup = async (req, res) => {
         }
     }
 };
-
 
 exports.signin = async (req, res) => {
     const { username, password } = req.body;

@@ -13,4 +13,6 @@ const ProblemController = require('../controllers/ProblemController');
 router.get('/problems/:difficulty', ProblemController.getProblemsByDifficulty);
 router.post('/getQuestionId' , ProblemController.getQuestionId);
 
+router.get('/questionbank' , ProblemController.renderQuestionBank);
+
 module.exports = router;
