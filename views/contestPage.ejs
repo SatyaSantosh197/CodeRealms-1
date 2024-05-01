@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="contestPageStyles.css">
+</head>
+<body>
+    <div class="container">
+    <div class="card">
+        <div class="cardHeader" >
+            <div class="cardTitle"></div>
+
+            <div class="cardControls">
+                <div class="Control redControl"></div>
+                <div class="Control yellowControl"></div>
+                <div class="Control greenControl"></div>
+            </div>
+        </div>
+
+        <a href="">
+            <div class="questionCard">x
+                <div class="one">
+                    <p>Question Title: <%= QuestionTitle %></p>
+                    <p>Status: <%=Status%></p>
+                </div>
+                <div class="two">
+                    <p>Difficulty: <%= difficulty %></p>
+                    <p >Score: <%= QuestionScore %></p>
+                </div>
+            </div>
+        </a>
+
+    </div>
+    </div>
+</body>
+</html>
