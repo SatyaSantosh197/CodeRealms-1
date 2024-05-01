@@ -335,6 +335,7 @@ exports.deleteBookmark = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 exports.getBookmark = async (req, res) => {
     try {
         const token = req.cookies.userjwt;
@@ -369,8 +370,8 @@ exports.getBookmark = async (req, res) => {
             }
         }
 
-        // Send the bookmark data as a response
-        res.status(200).json({ success: true, bookmarks: bookmarkData });
+        // Render the EJS file with the bookmark data
+        res.redirect('/questionbank', { bookmarks: bookmarkData }); // Pass bookmarks data to the template
     } catch (error) {
         console.error('Error fetching bookmarks:', error);
         res.status(500).json({ error: 'Internal server error' });

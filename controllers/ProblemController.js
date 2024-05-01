@@ -1,5 +1,8 @@
 // controllers/ProblemController.js
 const Problem = require('../models/problem');
+const User = require('../models/User');
+const Bookmark = require('../models/bookmark');
+const jwt = require('jsonwebtoken');
 
 exports.createProblem = async (req, res) => {
     try {
@@ -121,3 +124,47 @@ exports.getProblemsByDifficulty = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+
+
+exports.renderQuestionBank = async (req, res) => {
+    try {
+        const token = req.cookies.userjwt;
+
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+
+        const decodedToken = jwt.verify(token, 'coderealm_secret_code');
+        const username = decodedToken.username;
+
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        const bookmarks = user.bookmarkIds;
+
+        // Create an array to store bookmark data
+        const bookmarkData = [];
+
+        // Iterate through each bookmark and fetch its details
+        for (const bookmarkId of bookmarks) {
+            const bookmark = await Bookmark.findById(bookmarkId);
+            if (bookmark) {
+                bookmarkData.push({
+                    id: bookmark._id,
+                    questionTitle: bookmark.questionTitle,
+                    difficulty: bookmark.difficulty
+                });
+            }
+        }
+
+        // Render the EJS file with the bookmark data
+        res.render('questionBank', { bookmarks: bookmarkData }); // Pass bookmarks data to the template
+    } catch (error) {
+        console.error('Error fetching bookmarks:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}

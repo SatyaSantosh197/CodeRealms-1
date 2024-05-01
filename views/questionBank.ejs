@@ -1,3 +1,16 @@
+<% function getDifficultyColor(difficulty) {
+    if (difficulty === 'easy') {
+        return 'green';
+    } else if (difficulty === 'medium') {
+        return 'yellow';
+    } else if (difficulty === 'hard') {
+        return 'red';
+    } else {
+        return 'black'; // Default color
+    }
+} %>
+
+
 <head>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/css/styleQuestion.css">
@@ -158,9 +171,16 @@ Since, 1 is not present, so output is -1.
                     </h3>
                 </div>
                 <div class="bookmarkContent">
-
+                    <% bookmarks.forEach(bookmark=> { %>
+                        <div class="bookmarkedQuestion">
+                            <span class="level" style="color: <%= getDifficultyColor(bookmark.difficulty) %>">LEVEL <%=
+                                    bookmark.difficulty.toUpperCase() %></span>
+                            <%= bookmark.questionTitle %>
+                        </div>
+                        <% }); %>
                 </div>
             </div>
+
         </div> <!-- Closing right_section div -->
 
 
@@ -245,6 +265,7 @@ Since, 1 is not present, so output is -1.
 
     </section>
     <script>
+        
         function filterQuestions(difficulty) {
             let questionCardsContainer = document.querySelector('.dropdown-container');
             let questionCards = document.querySelectorAll('.questionCard');
