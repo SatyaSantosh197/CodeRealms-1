@@ -339,19 +339,7 @@ exports.deleteBookmark = async (req, res) => {
 
 exports.getBookmark = async (req, res) => {
     try {
-        function getDifficultyColor(difficulty) {
-            if (difficulty === 'easy') {
-                return 'green';
-            } else if (difficulty === 'medium') {
-                return 'yellow';
-            } else if (difficulty === 'hard') {
-                return 'red';
-            } else {
-                return 'black'; // Default color
-            }
-        }   
-
-
+       
         const token = req.cookies.userjwt;
 
         if (!token) {
@@ -380,7 +368,6 @@ exports.getBookmark = async (req, res) => {
                     id: bookmark._id,
                     questionTitle: bookmark.questionTitle,
                     difficulty: bookmark.difficulty,
-                    difficultyColor: getDifficultyColor(bookmark.difficulty)
                 });
             }
         }

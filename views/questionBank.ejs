@@ -1,3 +1,17 @@
+<% function getDifficultyColor(difficulty) { %>
+    <% if (difficulty === 'easy') { %>
+        <% return 'green'; %>
+    <% } else if (difficulty === 'medium') { %>
+        <% return 'yellow'; %>
+    <% } else if (difficulty === 'hard') { %>
+        <% return 'red'; %>
+    <% } else { %>
+        <% return 'black'; // Default color %>
+    <% } %>
+<% } %>
+
+
+
 <head>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/css/styleQuestion.css">
@@ -158,14 +172,14 @@ Since, 1 is not present, so output is -1.
                     </h3>
                 </div>
                 <div class="bookmarkContent">
-                    <% bookmarks.forEach(bookmark=> { %>
+                    <% bookmarks.forEach(bookmark => { %>
                         <div class="bookmarkedQuestion">
-                            <span class="level">LEVEL <%= bookmark.difficulty.toUpperCase() %></span>
-
+                            <span class="level" style="color: <%= getDifficultyColor(bookmark.difficultyColor) %>">LEVEL <%= bookmark.difficulty.toUpperCase() %></span>
                             <%= bookmark.questionTitle %>
                         </div>
-                        <% }); %>
+                    <% }); %>
                 </div>
+                
 
             </div>
 
@@ -296,12 +310,12 @@ Since, 1 is not present, so output is -1.
                     const imagePath = `/images/PNG-cards-1.3/image (${randomImageIndex}).png`;
 
                     const cardHTML = `
-                <div class="questionCard" id="${problem._id}" data-difficulty="${difficulty}" onclick=redirectToPage("${problem._id}") >
+                <div class="questionCard" id="${problem._id}" data-difficulty="${difficulty}") >
                     <div class="flip">
-                        <div class="QuestionUpper" id="${problem._id}" style="background-image: url('${imagePath}'); background-size:contain;background-repeat:no-repeat">
+                        <div class="QuestionUpper" id="${problem._id}" style="background-image: url('${imagePath}'); background-size:contain;background-repeat:no-repeat" >
                         </div>
-                        <div class="QuestionDown">
-                            <div class="Down1">
+                        <div class="QuestionDown" >
+                            <div class="Down1" onclick=redirectToPage("${problem.QuestionId}")>
                                 <p>${problem.QuestionTitle}</p>
                             </div>
                             <hr>
