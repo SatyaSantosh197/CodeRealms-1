@@ -7,6 +7,13 @@ const bcrypt = require('bcrypt');
 //    email: { type: String, unique: true, required: true }
 //});
 
+const Bookmark = require('./bookmark');
+const Realm = require('./realm');
+const Contest = require('./contest');
+const Problem = require('./problem');
+
+
+
 const UserSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -94,7 +101,12 @@ const UserSchema = new mongoose.Schema({
     ],
     role : {
         type : String, enum:['user','moderator','superuser'], default : 'user'
-    }
+    },
+    bookmarkIds: [
+        {
+            type: mongoose.Schema.Types.ObjectId, ref: 'Bookmark'
+        }
+    ],
 
 
 });

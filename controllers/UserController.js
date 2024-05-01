@@ -262,45 +262,43 @@ exports.home = async (req, res) => {
 
 exports.postBookmark = async (req, res) => {
     try {
-        // Destructure the required properties from the request body
-        const {  questionTitle,
-            difficulty,
-            text,
-            QuestionTestOuput01,
-            QuestionTestOuput02,
-            QuestionTestOuput03,
-            QuestionOutputFormat,
-            QuestionId,
-            QuestionTestInput01,
-            QuestionTestInput02,
-            QuestionTestInput03,
-            QuestionInputFormat,
-            runMemoryLimit,
-            runTimeout } = req.body;
+        const { questionText, difficulty } = req.body;
+        const token = req.cookies.userjwt;
+
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+
+        const decodedToken = await new Promise((resolve, reject) => {
+            jwt.verify(token, 'coderealm_secret_code', (err, decoded) => {
+                if (err) reject(err);
+                else resolve(decoded);
+            });
+        });
+
+        const username = decodedToken.username;
+        const user = await User.findOne({ username: username });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
 
         // Create a new bookmark document
-        const bookmark = new Bookmark({    questionTitle,
-            difficulty,
-            text,
-            QuestionTestOuput01,
-            QuestionTestOuput02,
-            QuestionTestOuput03,
-            QuestionOutputFormat,
-            QuestionId,
-            QuestionTestInput01,
-            QuestionTestInput02,
-            QuestionTestInput03,
-            QuestionInputFormat,
-            runMemoryLimit,
-            runTimeout});
-
-        // Save the bookmark to the database
+        const bookmark = new Bookmark({ questionTitle: questionText, difficulty });
         await bookmark.save();
+
+        // Initialize user's bookmarks array if not already initialized
+        if (!user.bookmarks) {
+            user.bookmarks = [];
+        }
+
+        // Push the bookmark's _id into the user's bookmarks array
+        user.bookmarkIds.push(bookmark._id);
+        await user.save();
 
         // Respond with a success message
         res.status(201).json({ message: 'Bookmark added successfully' });
     } catch (error) {
-        // Handle errors
         console.error('Error adding bookmark:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
@@ -310,7 +308,23 @@ exports.postBookmark = async (req, res) => {
 exports.deleteBookmark = async (req, res) => {
     try {
         const { questionText } = req.body;
-        await Bookmark.deleteOne({ questionText });
+
+        // Find the bookmark to delete
+        const bookmark = await Bookmark.findOne({ questionTitle: questionText });
+        if (!bookmark) {
+            return res.status(404).json({ message: 'Bookmark not found' });
+        }
+
+        // Remove the reference to the bookmark from the user's bookmarkIds array
+        const user = await User.findOne({ bookmarkIds: bookmark._id });
+        if (user) {
+            user.bookmarkIds.pull(bookmark._id); // Remove the bookmark reference from the array
+            await user.save();
+        }
+
+        // Delete the bookmark
+        await bookmark.remove();
+
         res.status(200).json({ message: 'Bookmark removed successfully' });
     } catch (error) {
         console.error('Error removing bookmark', error);
@@ -320,11 +334,46 @@ exports.deleteBookmark = async (req, res) => {
 
 exports.getBookmark = async (req, res) => {
     try {
-        const bookmarks = await Bookmark.find();
-        res.status(200).json(bookmarks);
+        const token = req.cookies.userjwt;
+
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+
+        // Wrap jwt.verify in a Promise
+        const decodedToken = await new Promise((resolve, reject) => {
+            jwt.verify(token, 'coderealm_secret_code', (err, decoded) => {
+                if (err) reject(err);
+                else resolve(decoded);
+            });
+        });
+
+        const username = decodedToken.username;
+
+        const user = await User.findOne({ username: username });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        const bookmarks = user.bookmarkIds;
+
+        // Create an array to store HTML elements representing bookmarks
+        const bookmarkElements = [];
+
+        // Iterate through each bookmark and create HTML elements
+        for (const bookmarkId of bookmarks) {
+            const bookmark = await Bookmark.findById(bookmarkId);
+            if (bookmark) {
+                const bookmarkElement = createBookmarkElement(bookmark.questionTitle, bookmark.difficulty);
+                bookmarkElements.push(bookmarkElement);
+            }
+        }
+
+        // Send the HTML elements as a response
+        res.status(200).json({ success: true, bookmarks: bookmarkElements });
     } catch (error) {
         console.error('Error fetching bookmarks:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
-
