@@ -21,6 +21,10 @@ color: black;
   position: static;
 }
 
+.overallQ{
+  display: flex;
+  background-color: transparent;
+}
 
 body{
   margin: 0%;
@@ -196,7 +200,6 @@ img{
     display: flex;
     /* flex-direction: column; */
     justify-content: center;
-    background-color: #000000;
     color: white;
     padding: 10px;
     height: 90%;
