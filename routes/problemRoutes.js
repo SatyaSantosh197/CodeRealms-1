@@ -9,7 +9,8 @@ const ProblemController = require('../controllers/ProblemController');
 // router.put('/:id', ProblemController.updateProblem);
 // router.delete('/:id', ProblemController.deleteProblem);
 
-router.get('/randomquestion/:difficulty', ProblemController.getRandomQuestion);
+// router.get('/randomquestion/:difficulty', ProblemController.getRandomQuestion);
+router.get('/problems/:difficulty', ProblemController.getProblemsByDifficulty);
 router.post('/getQuestionId' , ProblemController.getQuestionId);
 
 module.exports = router;

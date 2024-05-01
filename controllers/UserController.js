@@ -304,7 +304,6 @@ exports.postBookmark = async (req, res) => {
     }
 };
 
-
 exports.deleteBookmark = async (req, res) => {
     try {
         const { questionText } = req.body;
@@ -316,10 +315,15 @@ exports.deleteBookmark = async (req, res) => {
         }
 
         // Remove the reference to the bookmark from the user's bookmarkIds array
-        const user = await User.findOne({ bookmarkIds: bookmark._id });
-        if (user) {
-            user.bookmarkIds.pull(bookmark._id); // Remove the bookmark reference from the array
-            await user.save();
+        const user = await User.findOneAndUpdate(
+            { bookmarkIds: bookmark._id },
+            { $pull: { bookmarkIds: bookmark._id } },
+            { new: true }
+        );
+
+        // Check if the user exists and the bookmark reference was successfully removed
+        if (!user) {
+            return res.status(404).json({ message: 'User not found or bookmark reference not present' });
         }
 
         // Delete the bookmark
@@ -331,7 +335,6 @@ exports.deleteBookmark = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
-
 exports.getBookmark = async (req, res) => {
     try {
         const token = req.cookies.userjwt;
@@ -340,17 +343,10 @@ exports.getBookmark = async (req, res) => {
             return res.status(401).json({ success: false, message: 'Unauthorized' });
         }
 
-        // Wrap jwt.verify in a Promise
-        const decodedToken = await new Promise((resolve, reject) => {
-            jwt.verify(token, 'coderealm_secret_code', (err, decoded) => {
-                if (err) reject(err);
-                else resolve(decoded);
-            });
-        });
-
+        const decodedToken = jwt.verify(token, 'coderealm_secret_code');
         const username = decodedToken.username;
 
-        const user = await User.findOne({ username: username });
+        const user = await User.findOne({ username });
 
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
@@ -358,20 +354,23 @@ exports.getBookmark = async (req, res) => {
 
         const bookmarks = user.bookmarkIds;
 
-        // Create an array to store HTML elements representing bookmarks
-        const bookmarkElements = [];
+        // Create an array to store bookmark data
+        const bookmarkData = [];
 
-        // Iterate through each bookmark and create HTML elements
+        // Iterate through each bookmark and fetch its details
         for (const bookmarkId of bookmarks) {
             const bookmark = await Bookmark.findById(bookmarkId);
             if (bookmark) {
-                const bookmarkElement = createBookmarkElement(bookmark.questionTitle, bookmark.difficulty);
-                bookmarkElements.push(bookmarkElement);
+                bookmarkData.push({
+                    id: bookmark._id,
+                    questionTitle: bookmark.questionTitle,
+                    difficulty: bookmark.difficulty
+                });
             }
         }
 
-        // Send the HTML elements as a response
-        res.status(200).json({ success: true, bookmarks: bookmarkElements });
+        // Send the bookmark data as a response
+        res.status(200).json({ success: true, bookmarks: bookmarkData });
     } catch (error) {
         console.error('Error fetching bookmarks:', error);
         res.status(500).json({ error: 'Internal server error' });

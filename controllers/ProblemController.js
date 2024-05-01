@@ -109,3 +109,15 @@ exports.getQuestionId = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+
+exports.getProblemsByDifficulty = async (req, res) => {
+    try {
+        const { difficulty } = req.params;
+        const problems = await Problem.find({ difficulty }); // Assuming 'difficulty' is a field in the Problem model
+        res.json(problems);
+    } catch (error) {
+        console.error(`Error fetching ${difficulty} problems:`, error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};

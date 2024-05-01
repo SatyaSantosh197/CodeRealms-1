@@ -107,201 +107,9 @@
             </div>
 
             <div class="dropdown-container">
-                <div class="questionCard" id="easy" data-difficulty="easy">
-                    <div class="flip">
-                        <div class="QuestionUpper" id="Q1s">
 
-                        </div>
-                        <div class="QuestionDown">
-                            <div class="Down1">
-
-                                <p>
-                                    How do you print a Fibonacci sequence using recursion?
-                                </p>
-
-                            </div>
-                            <hr>
-                            <div class="Down2">
-
-                                <div class="iconFire">
-                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
-                                    <span id="easye">LEVEL EASY</span>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="questionCard" id="medium" data-difficulty="medium">
-                    <div class="flip">
-                        <div class="QuestionUpper" id="Q2s">
-
-
-                        </div>
-                        <div class="QuestionDown">
-                            <div class="Down1">
-
-                                <p>
-                                    How do you implement binary search to find an element in a sorted array?
-                                </p>
-
-                            </div>
-                            <hr>
-                            <div class="Down2">
-
-                                <div class="iconFire">
-                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
-                                    <span id="intermediatee">LEVEL MEDIUM</span>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="questionCard" id="medium" data-difficulty="medium">
-                    <div class="flip">
-                        <div class="QuestionUpper" id="Q3s">
-
-
-                        </div>
-                        <div class="QuestionDown">
-                            <div class="Down1">
-
-                                <p>
-                                    How do you implement binary search to find an element in a sorted array?
-                                </p>
-
-                            </div>
-                            <hr>
-                            <div class="Down2">
-
-                                <div class="iconFire">
-                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
-                                    <span id="intermediatee">LEVEL MEDIUM</span>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="questionCard" id="hard" data-difficulty="hard">
-                    <div class="flip">
-                        <div class="QuestionUpper" id="Q7s">
-
-
-                        </div>
-                        <div class="QuestionDown">
-                            <div class="Down1">
-
-                                <p>
-                                    How do you implement binary search to find an element in a sorted array?
-                                </p>
-
-                            </div>
-                            <hr>
-                            <div class="Down2">
-
-                                <div class="iconFire">
-                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
-                                    <span id="harde">LEVEL HARD</span>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="questionCard" id="easy" data-difficulty="easy">
-                    <div class="flip">
-                        <div class="QuestionUpper" id="Q8s">
-
-
-                        </div>
-                        <div class="QuestionDown">
-                            <div class="Down1">
-
-                                <p>
-                                    How do you implement binary search to find an element in a sorted array?
-                                </p>
-
-                            </div>
-                            <hr>
-                            <div class="Down2">
-
-                                <div class="iconFire">
-                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
-                                    <span id="easye">LEVEL HARD</span>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="questionCard" id="hard" data-difficulty="hard">
-                    <div class="flip">
-                        <div class="QuestionUpper" id="Q9s">
-
-                            <!-- <p>QUESTION </p> -->
-                        </div>
-                        <div class="QuestionDown">
-                            <div class="Down1">
-
-                                <p>
-                                    Basic Math includes problems on topics like arithmetic, sequences
-                                    , and counting, which are fundamental to proper understanding of algorithmic logic.
-                                </p>
-
-                            </div>
-                            <hr>
-                            <div class="Down2">
-                                <div class="level">
-                                    <div class="iconFire">
-                                        <box-icon name='bookmark-alt' type='solid' color='#d29e22'
-                                            class="bookmarkICon"></box-icon>
-                                        <span id="harde">LEVEL HARD</span>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="questionCard" id="hard" data-difficulty="hard">
-                    <div class="flip">
-                        <div class="QuestionUpper" id="Q6s">
-
-
-                        </div>
-                        <div class="QuestionDown">
-                            <div class="Down1">
-
-                                <p>
-                                    How do you print a binary tree in vertical order?
-                                </p>
-
-                            </div>
-                            <hr>
-                            <div class="Down2">
-                                <div class="level">
-                                    <div class="iconFire">
-
-                                        <span id="harde">LEVEL HARD</span>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+
 
         </div>
 
@@ -457,83 +265,90 @@ Since, 1 is not present, so output is -1.
             });
         }
 
-        async function fetchRandomQuestionByDifficulty(difficulty) {
+        async function fetchAllProblemsByDifficulty(difficulty) {
             try {
-                const response = await fetch(`/randomquestion/${difficulty}`);
-                const randomQuestion = await response.json();
-                return randomQuestion;
+                const response = await fetch(`/problems/${difficulty}`);
+                const problems = await response.json();
+                return problems;
             } catch (error) {
-                console.error(`Error fetching random ${difficulty} question`, error);
-                return null;
-            }
-        }
-        async function updateQuestionInDown1(difficulty) {
-            try {
-                // Fetch random question title and ID
-                const response = await fetch(`/randomquestion/${difficulty}`);
-                const randomQuestion = await response.json();
-
-                if (randomQuestion && randomQuestion.QuestionTitle && randomQuestion.QuestionId) {
-                    const down1Divs = document.querySelectorAll(`[data-difficulty="${difficulty}"] .QuestionDown .Down1`);
-                    down1Divs.forEach(div => {
-                        // Update the question title
-                        div.innerHTML = `<p>${randomQuestion.QuestionTitle}</p>`;
-
-                        // Store the question ID as a data attribute
-                        div.dataset.questionId = randomQuestion.QuestionId;
-
-                        // Attach a click event listener to redirect to the question ID route
-                        div.addEventListener('click', () => {
-                            const questionId = div.dataset.questionId;
-                            window.location.href = `/RCET/practice/${questionId}`;
-                        });
-
-                        // Log the question ID to the console
-                        console.log(`Question ID: ${randomQuestion.QuestionId}`);
-                    });
-                } else {
-                    console.error(`No ${difficulty} question found`);
-                }
-            } catch (error) {
-                console.error(`Error updating ${difficulty} question in Down1`, error);
+                console.error(`Error fetching ${difficulty} problems`, error);
+                return [];
             }
         }
 
+        async function updateQuestionCards(difficulty) {
+            try {
+                const problems = await fetchAllProblemsByDifficulty(difficulty);
+                const questionCardsContainer = document.querySelector('.dropdown-container');
 
+                problems.forEach(problem => {
+                    // Generate a random number between 1 and 3 (assuming you have 3 images)
+                    const randomImageIndex = Math.floor(Math.random() * 52) + 1;
+                    const imagePath = `/images/PNG-cards-1.3/image (${randomImageIndex}).png`;
+
+                    const cardHTML = `
+                <div class="questionCard" id="${problem._id}" data-difficulty="${difficulty}">
+                    <div class="flip">
+                        <div class="QuestionUpper" id="${problem._id}" style="background-image: url('${imagePath}'); background-size:contain;background-repeat:no-repeat">
+                        </div>
+                        <div class="QuestionDown">
+                            <div class="Down1">
+                                <p>${problem.QuestionTitle}</p>
+                            </div>
+                            <hr>
+                            <div class="Down2">
+                                <div class="iconFire">
+                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
+                                    <span id="${difficulty}e">LEVEL ${difficulty.toUpperCase()}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+                    questionCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
+                });
+            } catch (error) {
+                console.error(`Error updating ${difficulty} question cards`, error);
+            }
+
+            // Bookmarking
+            document.querySelectorAll('.iconFire').forEach(icon => {
+                icon.addEventListener('click', async () => {
+                    const questionCard = icon.closest('.questionCard');
+                    const questionText = questionCard.querySelector('.QuestionDown .Down1 p').innerText;
+                    const difficulty = questionCard.dataset.difficulty;
+                    const bookmarkContent = document.querySelector('.bookmarkContent');
+
+                    // Check if the question is already bookmarked
+                    const existingBookmark = [...bookmarkContent.querySelectorAll('.bookmarkedQuestion')]
+                        .find(bookmark => bookmark.dataset.question === questionText);
+
+                    if (existingBookmark) {
+                        // If already bookmarked, remove from display and delete from database
+                        bookmarkContent.removeChild(existingBookmark);
+                        await deleteBookmarkFromDatabase(questionText);
+                        console.log('Bookmark removed successfully');
+                    } else {
+                        // If not bookmarked, add to display and database
+                        const bookmarkedQuestionDiv = createBookmarkElement(questionText, difficulty);
+                        bookmarkContent.appendChild(bookmarkedQuestionDiv);
+                        await addBookmarkToDatabase(questionText, difficulty);
+                        console.log('Bookmark added successfully');
+                    }
+                });
+            });
+        }
 
         // Call the function for each difficulty level
-        updateQuestionInDown1('easy');
-        updateQuestionInDown1('medium');
-        updateQuestionInDown1('hard');
+        updateQuestionCards('easy');
+        updateQuestionCards('medium');
+        updateQuestionCards('hard');
+
 
 
         // JavaScript
-        // Bookmarking
-        document.querySelectorAll('.iconFire').forEach(icon => {
-            icon.addEventListener('click', async () => {
-                const questionCard = icon.closest('.questionCard');
-                const questionText = questionCard.querySelector('.QuestionDown .Down1 p').innerText;
-                const difficulty = questionCard.dataset.difficulty;
-                const bookmarkContent = document.querySelector('.bookmarkContent');
 
-                // Check if the question is already bookmarked
-                const existingBookmark = [...bookmarkContent.querySelectorAll('.bookmarkedQuestion')]
-                    .find(bookmark => bookmark.dataset.question === questionText);
-
-                if (existingBookmark) {
-                    // If already bookmarked, remove from display and delete from database
-                    bookmarkContent.removeChild(existingBookmark);
-                    await deleteBookmarkFromDatabase(questionText);
-                    console.log('Bookmark removed successfully');
-                } else {
-                    // If not bookmarked, add to display and database
-                    const bookmarkedQuestionDiv = createBookmarkElement(questionText, difficulty);
-                    bookmarkContent.appendChild(bookmarkedQuestionDiv);
-                    await addBookmarkToDatabase(questionText, difficulty);
-                    console.log('Bookmark added successfully');
-                }
-            });
-        });
 
         async function addBookmarkToDatabase(questionText, difficulty) {
             // Send a POST request to the server to add the bookmark
