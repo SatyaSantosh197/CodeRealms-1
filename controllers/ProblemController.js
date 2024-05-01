@@ -74,7 +74,7 @@ exports.getRandomQuestion = async (req, res) => {
         // Aggregate query to fetch a random question by difficulty
         const randomQuestion = await Problem.aggregate([
             { $match: { difficulty } },
-            { $sample: { size: 1 } }
+            { $sample: { size: 1} }
         ]);
 
         // If a random question is found, send it in the response
