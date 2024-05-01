@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
             'text',
             'difficulty',
             { name: 'QuestionScore', type: 'number' }, // Specify type as 'number' for numeric input
-            'QuestionId',
+            {name:'QuestionId' , type : 'number' } ,// Specify type as 'number' for numeric input,
             'QuestionInputFormat',
             'QuestionOutputFormat',
             'QuestionTestInput01',

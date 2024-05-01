@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeRealms RCET</title>
+    <link rel="stylesheet" href="/RCET_styles/RCET_styles.css">
+  </head>
+  <body>
+    <!-- This div represents the Question section, it has 2 segments -->
+    <div class="question--data">
+      <div class="question-env">
+        <h1 class="question"><%=questionTitle%></h1>
+      </div>
+      <!-- This part is the Question text data -->
+      <div class="question--text">
+        <p class="question">
+          <%= questionText %>
+        </p>
+      </div>
+      <!-- This part gives Details about the Test Cases  -->
+      <div class="testcases">
+        <h2><strong>Input-Format:</strong></h2>
+        <p><%=inputFormat%></p>
+        <h2><strong>Output-Format:</strong></h2>
+        <p><%=outputFormat%></p>
+        <h2>Test Cases</h2>
+        <div class="dotted-line"></div>
+        <ul class="no-bullet">
+          <li>
+            <h3>&diams; Test Case 1</h3>
+            <p><strong>Input:</strong> <%= testInput01 %></p>
+            <p><strong>Expected Output:</strong><%= testOutput01 %></p>
+          </li>
+          <li>
+            <h3>&diams; Test Case 2</h3>
+            <p><strong>Input:</strong> <%=testInput02%></p>
+            <p><strong>Expected Output:</strong><%=testOutput02%></p>
+          </li>
+          <li>
+            <h3>&diams; Test Case 3</h3>
+            <p><strong>Input:</strong> <%=testInput03%></p>
+            <p><strong>Expected Output:</strong><%=testOutput03%></p>
+          </li>
+        </ul>
+        <p>------------------------------EOF------------------------------</p>
+      </div>
+    </div>
+     <!-- This Div is where the RCET Engine is housed, outer div is a decoration -->
+     <div class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">$Code-Realms</div>
+
+        <div class="cardControls">
+          <div class="Control redControl"></div>
+          <div class="Control yellowControl"></div>
+          <div class="Control greenControl"></div>
+        </div>
+      </div>
+      <!-- This div holds the primary editor block -->
+      <div class="editor">
+        <div class="editor__wrapper">
+            <!-- This is the IDE Block -->
+            <div class="editor__body">
+              <div id="codeEditorWindow" class="editor__code"></div>
+            </div>
+            <!-- This houses the footer block -->
+            <div class="editor__footer" id="editorConsole">
+              <div class="editor__footer--left">
+                <button class="editor__btn editor__run">RUN</button>
+                <button class="editor__btn editor__submit">SUBMIT</button>
+              </div>
+              <div class="editor__footer--right">
+                <div class="editor__console">
+                  <ul> <li><p><strong>Compilation_status: </strong><%=status%></p></li>
+                    <li><p><strong>TestCase-1: </strong><%=status01%></p></li>
+                    <li><p><strong>TestCase-2: </strong><%=status02%></p></li>
+                    <li><p><strong>TestCase-3: </strong><%=status03%></p></li></ul>
+                </div>
+                <ul class="editor__console-logs">
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ACE_EDITOR essential scripts -->
+      <script src="/RCET_scripts/ace-builds-master/src-min/ace.js"></script>
+      <script
+        class="languages"
+        src="/RCET_scripts/ace-builds-master/src-min/mode-c_cpp.js"
+      ></script>
+      <script src="/RCET_scripts/ace-builds-master/src-min/ext-language_tools.js"></script>
+      <!-- Custom scripts are housed below -->
+      <script src="/RCET_scripts/RCET_scripts.js"></script>
+    </body>
+  </html>
+  

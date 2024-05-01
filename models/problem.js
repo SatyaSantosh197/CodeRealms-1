@@ -2,11 +2,10 @@ const mongoose = require('mongoose');
 
 const problemSchema = new mongoose.Schema({
 
-
     text: String,
     difficulty: String,
     QuestionScore: Number,
-    QuestionId: String,
+    QuestionId: Number,
     QuestionInputFormat: String,
     QuestionOutputFormat: String,
     QuestionTestInput01: String,
