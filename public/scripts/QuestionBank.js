@@ -162,3 +162,12 @@ function redirectToPage() {
     window.location.href = `/RCET/practice/${questionID}`;
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    var preElements = document.querySelectorAll(".questioninfo pre");
+
+    preElements.forEach(function(preElement) {
+        if (preElement.textContent.length > 300) {
+            preElement.textContent = preElement.textContent.substring(0, 300) + "...";
+        }
+    });
+});

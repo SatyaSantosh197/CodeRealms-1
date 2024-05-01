@@ -868,12 +868,21 @@ a{
   .input:checked + .btn .span {
     color: var(--font-color-light);
   }
+  .questioninfo pre {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 900px; /* Adjust as needed */
+    max-height: 900px;
+    margin-top: 19px;
+}
 
   .glitch {
     font-family: 'Fira Mono', monospace;
     font-size: 16px;
     line-height: 1.5; /* Adjust the line spacing as needed */
     animation: glitch 1s linear infinite;
+    margin-left:0 ;
   }
   @keyframes glitch {
     2%, 64% {

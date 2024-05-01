@@ -151,12 +151,13 @@
                         </h4>
                         <h4>
                             <pre class="glitch" title="Question Test Output 1">
-                                Question Test Output 1: <%= problem.QuestionTestOutput01 %>
+                                Question Test Output 1: <%= problem.questionTestOutput1 %>
                             </pre>
                         </h4>
                         
                     </div>
-                    <button class="codehere" onclick="redirectToPage('<%= problem._id %>')">
+                    <button class="codehere" onclick="redirectToPage('<%= problem.QuestionId %>')"
+                        >
                         CODE HERE!!
                     </button>
                 </div>
@@ -434,6 +435,13 @@
             const questionID = probId; // Replace with your logic to get the question ID
             window.location.href = `/RCET/practice/${questionID}`;
         }
+        function redirectToPage(questionId) {
+    // Construct the URL using the provided questionId
+    const url = `/RCET/practice/${questionId}`;
+
+    // Redirect to the constructed URL
+    window.location.href = url;
+}
 
 
 
