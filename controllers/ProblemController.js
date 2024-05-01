@@ -126,7 +126,6 @@ exports.getProblemsByDifficulty = async (req, res) => {
 };
 
 
-
 exports.renderQuestionBank = async (req, res) => {
     try {
         const token = req.cookies.userjwt;
@@ -161,8 +160,13 @@ exports.renderQuestionBank = async (req, res) => {
             }
         }
 
-        // Render the EJS file with the bookmark data
-        res.render('questionBank', { bookmarks: bookmarkData }); // Pass bookmarks data to the template
+        // Fetch a random problem from the database
+        const randomProblem = await Problem.aggregate([{ $sample: { size: 1 } }]);
+        const problemDetails = randomProblem[0]; 
+
+        // Render the EJS file with the bookmark data and problem details
+        res.render('questionBank', { bookmarks: bookmarkData, problem: problemDetails });
+
     } catch (error) {
         console.error('Error fetching bookmarks:', error);
         res.status(500).json({ error: 'Internal server error' });

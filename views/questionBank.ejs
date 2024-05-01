@@ -140,28 +140,23 @@
                 <div class="questionD">
                     <div class="questioninfo" id="question-info">
                         <h4>
-                            <pre class="glitch" title="Given a string S consisting only '0's and '1's
-find the last index of the '1' present in it.
-Example 1:
-Input:
-S = 00001
-Output:
-4
-Explanation:
-Since, 1 is not present, so output is -1.">
-Given a string S consisting only '0's and '1's
-find the last index of the '1' present in it.
-<span class="glitch-green">Example 1:
-Input:
-S = 00001
-Output:
-4</span>
-Explanation:
-Since, 1 is not present, so output is -1.
-</pre>
+                            <pre class="glitch" title="<%= problem.text %>">
+                                <%= problem.text %>
+                            </pre>
                         </h4>
+                        <h4>
+                            <pre class="glitch" title="Question Test Input 1">
+                                Question Test Input 1: <%= problem.questionTestInput1 %>
+                            </pre>
+                        </h4>
+                        <h4>
+                            <pre class="glitch" title="Question Test Output 1">
+                                Question Test Output 1: <%= problem.questionTestOutput1 %>
+                            </pre>
+                        </h4>
+                        
                     </div>
-                    <button class="codehere">
+                    <button class="codehere" onclick="redirectToPage('<%= problem._id %>')">
                         CODE HERE!!
                     </button>
                 </div>
