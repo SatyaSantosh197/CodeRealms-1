@@ -1,0 +1,607 @@
+<head>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/css/styleQuestion.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400');
+    </style>
+</head>
+
+<body>
+    <!-- <div style="margin:0%; padding: 0%; position: static;"> -->
+    <div class="navBar">
+        <!-- <video src="background.mp4" muted autoplay loop playsinline style="display: fixed; size: 1px;"></video>
+                -->
+
+        <div class="logo">
+            <img src="/images/logo.png" class="logoMain">
+            <h2>CODE BANK</h2>
+        </div>
+
+        <div class="all_icons">
+            <div class="panelIcon"><a href="/profileNav"><img src="/images/profile.png"></a></a></div>
+            <div class="panel2Icon"><a href="/navBar"><img src="/images/home.png"></a></div>
+            <div class="panel3Icon"><a href="/codeBankNav"><img src="/images/greeenCodeBank.png"></a></div>
+
+        </div>
+
+        <div class="searchAndExit">
+            <div class="searchBar">
+                <div class="searchInput"><input type="text" placeholder="Search" class="searchi" id="realme_id"></div>
+                <!-- <div class="searchImage"><ion-icon name="search-outline" class="search" type="button" value="Join" id="create_realme"></ion-icon></div> -->
+                <input type="button" class="searchbit"
+                    style="display: flex; background-color: transparent; border-style: none;" value="🔍"
+                    id="create_realme">
+
+            </div>
+            <div class="Exit">
+
+                <img src="/images/user_profile.png" name="exit-outline" class="exitIcon" id="exitIcon"
+                    onclick="wrong"></ion-icon>
+                <div class="profileOptions">
+                    <ul>
+                        <li><a href="#">Logout</a></li>
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- </div> -->
+
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="navjs1.js"></script>
+    <div class="overall2">
+
+        <div class="overallQ" style="position: fixed; z-index: -1;">
+            <video src="/videos/background.mp4" autoplay muted loop></video>
+        </div>
+
+        <div class="main_page_Layout">
+            <div class="headings">
+                <h2>
+                    <span>P</span><span>R</span><span>A</span><span>C</span><span>T</span><span>I</span><span>S</span><span>E</span>
+                    <>
+                </h2>
+            </div>
+
+
+
+
+
+            <div class="right_upper">
+                <div class="option">
+                    <input checked="" value="option1" name="btn" type="radio" class="input" id="all"
+                        onclick="filterQuestions('all')">
+                    <div class="btn">
+                        <span class="span">All</span>
+                    </div>
+                </div>
+                <div class="option">
+                    <input value="option2" name="btn" type="radio" class="input" id="easy"
+                        onclick="filterQuestions('easy')">
+                    <div class="btn">
+                        <span class="span">Easy</span>
+                    </div>
+                </div>
+                <div class="option">
+                    <input checked="" value="option1" name="btn" type="radio" class="input" id="medium"
+                        onclick="filterQuestions('medium')">
+                    <div class="btn">
+                        <span class="span">Medium</span>
+                    </div>
+                </div>
+                <div class="option">
+                    <input value="option3" name="btn" type="radio" class="input" id="hard"
+                        onclick="filterQuestions('hard')">
+                    <div class="btn">
+                        <span class="span">Hard</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown-container">
+                <div class="questionCard" id="easy" data-difficulty="easy">
+                    <div class="flip">
+                        <div class="QuestionUpper" id="Q1s">
+
+                        </div>
+                        <div class="QuestionDown">
+                            <div class="Down1">
+
+                                <p>
+                                    How do you print a Fibonacci sequence using recursion?
+                                </p>
+
+                            </div>
+                            <hr>
+                            <div class="Down2">
+
+                                <div class="iconFire">
+                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
+                                    <span id="easye">LEVEL EASY</span>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="questionCard" id="medium" data-difficulty="medium">
+                    <div class="flip">
+                        <div class="QuestionUpper" id="Q2s">
+
+
+                        </div>
+                        <div class="QuestionDown">
+                            <div class="Down1">
+
+                                <p>
+                                    How do you implement binary search to find an element in a sorted array?
+                                </p>
+
+                            </div>
+                            <hr>
+                            <div class="Down2">
+
+                                <div class="iconFire">
+                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
+                                    <span id="intermediatee">LEVEL MEDIUM</span>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="questionCard" id="medium" data-difficulty="medium">
+                    <div class="flip">
+                        <div class="QuestionUpper" id="Q3s">
+
+
+                        </div>
+                        <div class="QuestionDown">
+                            <div class="Down1">
+
+                                <p>
+                                    How do you implement binary search to find an element in a sorted array?
+                                </p>
+
+                            </div>
+                            <hr>
+                            <div class="Down2">
+
+                                <div class="iconFire">
+                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
+                                    <span id="intermediatee">LEVEL MEDIUM</span>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="questionCard" id="hard" data-difficulty="hard">
+                    <div class="flip">
+                        <div class="QuestionUpper" id="Q7s">
+
+
+                        </div>
+                        <div class="QuestionDown">
+                            <div class="Down1">
+
+                                <p>
+                                    How do you implement binary search to find an element in a sorted array?
+                                </p>
+
+                            </div>
+                            <hr>
+                            <div class="Down2">
+
+                                <div class="iconFire">
+                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
+                                    <span id="harde">LEVEL HARD</span>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="questionCard" id="easy" data-difficulty="easy">
+                    <div class="flip">
+                        <div class="QuestionUpper" id="Q8s">
+
+
+                        </div>
+                        <div class="QuestionDown">
+                            <div class="Down1">
+
+                                <p>
+                                    How do you implement binary search to find an element in a sorted array?
+                                </p>
+
+                            </div>
+                            <hr>
+                            <div class="Down2">
+
+                                <div class="iconFire">
+                                    <box-icon name='bookmark-alt' type='solid' color='#d29e22'></box-icon>
+                                    <span id="easye">LEVEL HARD</span>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="questionCard" id="hard" data-difficulty="hard">
+                    <div class="flip">
+                        <div class="QuestionUpper" id="Q9s">
+
+                            <!-- <p>QUESTION </p> -->
+                        </div>
+                        <div class="QuestionDown">
+                            <div class="Down1">
+
+                                <p>
+                                    Basic Math includes problems on topics like arithmetic, sequences
+                                    , and counting, which are fundamental to proper understanding of algorithmic logic.
+                                </p>
+
+                            </div>
+                            <hr>
+                            <div class="Down2">
+                                <div class="level">
+                                    <div class="iconFire">
+                                        <box-icon name='bookmark-alt' type='solid' color='#d29e22'
+                                            class="bookmarkICon"></box-icon>
+                                        <span id="harde">LEVEL HARD</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="questionCard" id="hard" data-difficulty="hard">
+                    <div class="flip">
+                        <div class="QuestionUpper" id="Q6s">
+
+
+                        </div>
+                        <div class="QuestionDown">
+                            <div class="Down1">
+
+                                <p>
+                                    How do you print a binary tree in vertical order?
+                                </p>
+
+                            </div>
+                            <hr>
+                            <div class="Down2">
+                                <div class="level">
+                                    <div class="iconFire">
+
+                                        <span id="harde">LEVEL HARD</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="right_section">
+            <div class="main_page_Layout1">
+                <div class="heading">
+                    <h3>
+                        <span>I</span>M<span>POSSIBLE</span>
+                        QUESTIONS
+                    </h3>
+                </div>
+                <div class="questionD">
+                    <div class="questioninfo" id="question-info">
+                        <h4>
+                            <pre class="glitch" title="Given a string S consisting only '0's and '1's
+find the last index of the '1' present in it.
+Example 1:
+Input:
+S = 00001
+Output:
+4
+Explanation:
+Since, 1 is not present, so output is -1.">
+Given a string S consisting only '0's and '1's
+find the last index of the '1' present in it.
+<span class="glitch-green">Example 1:
+Input:
+S = 00001
+Output:
+4</span>
+Explanation:
+Since, 1 is not present, so output is -1.
+</pre>
+                        </h4>
+                    </div>
+                    <button class="codehere">
+                        CODE HERE!!
+                    </button>
+                </div>
+            </div>
+            <div class="bookmarks">
+                <div class="heading">
+                    <h3>
+                        <span>B</span>OOKMARKS
+                    </h3>
+                </div>
+                <div class="bookmarkContent">
+
+                </div>
+            </div>
+        </div> <!-- Closing right_section div -->
+
+
+
+    </div>
+
+
+
+    </div>
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+
+                    <div class="footer-about">
+                        <img style="height: 250px; width: 400PX; margin-top: -50px;" src="/imgs/cserlm.png"
+                            alt="csrelm">
+                        <p style="margin-top: -20px;">Lorem Ipsum is simply dummy text of the printing and typesetting
+                            industry. since the 1500s,
+                        </p>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <div class="useful-link">
+                        <h2>Useful Links</h2>
+                        <img src="./assets/images/about/home_line.png" alt="" class="img-fluid">
+                        <div class="use-links">
+                            <li><a href="/index" class="footerlink"><i class="fa-solid fa-angles-right"></i> Home</a>
+                            </li>
+                            <li><a href="/about" class="footerlink"><i class="fa-solid fa-angles-right"></i> About
+                                    Us</a></li>
+                            <li><a href="/gallery" class="footerlink"><i class="fa-solid fa-angles-right"></i>
+                                    Gallery</a></li>
+                            <li><a href="/contact" class="footerlink"><i class="fa-solid fa-angles-right"></i>
+                                    Contact</a></li>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <div class="social-links">
+                        <h2>Follow Us</h2>
+                        <img src="./assets/images/about/home_line.png" alt="">
+                        <div class="social-icons">
+                            <li><a href="" class="socialL"><i class="fa-brands fa-facebook-f"></i> Facebook</a></li>
+                            <li><a href="" class="socialL"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                            <li><a href="" class="socialL"><i class="fa-brands fa-linkedin-in"></i> Linkedin</a></li>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-md-3">
+                    <div class="address">
+                        <h2>Address</h2>
+                        <img src="./assets/images/about/home_line.png" alt="" class="img-fluid">
+                        <div class="address-links">
+                            <li class="address1"><i class="fa-solid fa-location-dot"></i> iiit sricity
+                                sricity
+                                andhra pradesh 517646</li>
+                            <li><a href="" class="addressL"><i class="fa-solid fa-phone"></i> +91 9938584270</a></li>
+                            <li><a href="" class="addressL"><i class="fa-solid fa-envelope"></i> coderealms@iiits.in</a>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </footer>
+    <!-- footer section end -->
+    <!-- footer copy right section start -->
+    <section id="copy-right">
+        <div class="copy-right-sec"><i class="fa-solid fa-copyright"></i>
+
+            code realms a project by <a href="#" class="zeni">team zenith</a>
+
+
+        </div>
+
+    </section>
+    <script>
+        function filterQuestions(difficulty) {
+            let questionCardsContainer = document.querySelector('.dropdown-container');
+            let questionCards = document.querySelectorAll('.questionCard');
+            let filteredCards = [];
+
+            questionCards.forEach(card => {
+                if (difficulty === 'all' || card.dataset.difficulty === difficulty) {
+                    filteredCards.push(card);
+                    card.style.visibility = 'visible'; // Show the card
+                } else {
+                    card.style.visibility = 'hidden'; // Hide the card
+                }
+            });
+
+            // Move filtered cards to the top of the container
+            filteredCards.forEach(card => {
+                questionCardsContainer.prepend(card);
+            });
+        }
+
+        async function fetchRandomQuestionByDifficulty(difficulty) {
+            try {
+                const response = await fetch(`/randomquestion/${difficulty}`);
+                const randomQuestion = await response.json();
+                return randomQuestion;
+            } catch (error) {
+                console.error(`Error fetching random ${difficulty} question`, error);
+                return null;
+            }
+        }
+        async function updateQuestionInDown1(difficulty) {
+            try {
+                // Fetch random question title and ID
+                const response = await fetch(`/randomquestion/${difficulty}`);
+                const randomQuestion = await response.json();
+
+                if (randomQuestion && randomQuestion.QuestionTitle && randomQuestion.QuestionId) {
+                    const down1Divs = document.querySelectorAll(`[data-difficulty="${difficulty}"] .QuestionDown .Down1`);
+                    down1Divs.forEach(div => {
+                        // Update the question title
+                        div.innerHTML = `<p>${randomQuestion.QuestionTitle}</p>`;
+
+                        // Store the question ID as a data attribute
+                        div.dataset.questionId = randomQuestion.QuestionId;
+
+                        // Attach a click event listener to redirect to the question ID route
+                        div.addEventListener('click', () => {
+                            const questionId = div.dataset.questionId;
+                            window.location.href = `/RCET/practice/${questionId}`;
+                        });
+
+                        // Log the question ID to the console
+                        console.log(`Question ID: ${randomQuestion.QuestionId}`);
+                    });
+                } else {
+                    console.error(`No ${difficulty} question found`);
+                }
+            } catch (error) {
+                console.error(`Error updating ${difficulty} question in Down1`, error);
+            }
+        }
+
+
+
+        // Call the function for each difficulty level
+        updateQuestionInDown1('easy');
+        updateQuestionInDown1('medium');
+        updateQuestionInDown1('hard');
+
+
+        // JavaScript
+        // Bookmarking
+        document.querySelectorAll('.iconFire').forEach(icon => {
+            icon.addEventListener('click', async () => {
+                const questionCard = icon.closest('.questionCard');
+                const questionText = questionCard.querySelector('.QuestionDown .Down1 p').innerText;
+                const difficulty = questionCard.dataset.difficulty;
+                const bookmarkContent = document.querySelector('.bookmarkContent');
+
+                // Check if the question is already bookmarked
+                const existingBookmark = [...bookmarkContent.querySelectorAll('.bookmarkedQuestion')]
+                    .find(bookmark => bookmark.dataset.question === questionText);
+
+                if (existingBookmark) {
+                    // If already bookmarked, remove from display and delete from database
+                    bookmarkContent.removeChild(existingBookmark);
+                    await deleteBookmarkFromDatabase(questionText);
+                    console.log('Bookmark removed successfully');
+                } else {
+                    // If not bookmarked, add to display and database
+                    const bookmarkedQuestionDiv = createBookmarkElement(questionText, difficulty);
+                    bookmarkContent.appendChild(bookmarkedQuestionDiv);
+                    await addBookmarkToDatabase(questionText, difficulty);
+                    console.log('Bookmark added successfully');
+                }
+            });
+        });
+
+        async function addBookmarkToDatabase(questionText, difficulty) {
+            // Send a POST request to the server to add the bookmark
+            try {
+                const response = await fetch('/bookmark', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ questionText, difficulty })
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to add bookmark');
+                }
+            } catch (error) {
+                console.error('Error adding bookmark:', error);
+            }
+        }
+
+        async function deleteBookmarkFromDatabase(questionText) {
+            // Send a DELETE request to the server to remove the bookmark
+            try {
+                const response = await fetch('/bookmark', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ questionText })
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to delete bookmark');
+                }
+            } catch (error) {
+                console.error('Error deleting bookmark:', error);
+            }
+        }
+
+        function createBookmarkElement(questionText, difficulty) {
+            // Create a new div to represent the bookmarked question
+            const bookmarkedQuestionDiv = document.createElement('div');
+            bookmarkedQuestionDiv.classList.add('bookmarkedQuestion'); // Apply CSS class
+            bookmarkedQuestionDiv.dataset.question = questionText;
+
+            // Create level span with appropriate color based on difficulty
+            const levelSpan = document.createElement('span');
+            levelSpan.classList.add('level');
+            levelSpan.textContent = `LEVEL ${difficulty.toUpperCase()}`;
+            if (difficulty === 'easy') {
+                levelSpan.style.color = 'green'; // Easy level color
+            } else if (difficulty === 'medium') {
+                levelSpan.style.color = 'yellow'; // Medium level color
+            } else if (difficulty === 'hard') {
+                levelSpan.style.color = 'red'; // Hard level color
+            }
+
+            // Append level span and question text to the bookmarked question div
+            bookmarkedQuestionDiv.appendChild(levelSpan);
+            bookmarkedQuestionDiv.appendChild(document.createTextNode(questionText));
+
+            return bookmarkedQuestionDiv;
+        }
+        function redirectToPage() {
+            // Logic to get the question ID and redirect to the corresponding path
+            const questionID = "getQuestionIDLogicHere"; // Replace with your logic to get the question ID
+            window.location.href = `/RCET/practice/${questionID}`;
+        }
+
+
+    </script>
+
+</body>

@@ -6,6 +6,7 @@ const User = require('../models/User');
 const Realm = require('../models/realm');
 const Contest = require('../models/contest')
 const Problem = require('../models/problem');
+const Bookmark = require('../models/bookmark');
 
 exports.signup = async (req, res) => {
     const { username, password, email } = req.body;
@@ -256,3 +257,74 @@ exports.home = async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 }
+
+
+
+exports.postBookmark = async (req, res) => {
+    try {
+        // Destructure the required properties from the request body
+        const {  questionTitle,
+            difficulty,
+            text,
+            QuestionTestOuput01,
+            QuestionTestOuput02,
+            QuestionTestOuput03,
+            QuestionOutputFormat,
+            QuestionId,
+            QuestionTestInput01,
+            QuestionTestInput02,
+            QuestionTestInput03,
+            QuestionInputFormat,
+            runMemoryLimit,
+            runTimeout } = req.body;
+
+        // Create a new bookmark document
+        const bookmark = new Bookmark({    questionTitle,
+            difficulty,
+            text,
+            QuestionTestOuput01,
+            QuestionTestOuput02,
+            QuestionTestOuput03,
+            QuestionOutputFormat,
+            QuestionId,
+            QuestionTestInput01,
+            QuestionTestInput02,
+            QuestionTestInput03,
+            QuestionInputFormat,
+            runMemoryLimit,
+            runTimeout});
+
+        // Save the bookmark to the database
+        await bookmark.save();
+
+        // Respond with a success message
+        res.status(201).json({ message: 'Bookmark added successfully' });
+    } catch (error) {
+        // Handle errors
+        console.error('Error adding bookmark:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+exports.deleteBookmark = async (req, res) => {
+    try {
+        const { questionText } = req.body;
+        await Bookmark.deleteOne({ questionText });
+        res.status(200).json({ message: 'Bookmark removed successfully' });
+    } catch (error) {
+        console.error('Error removing bookmark', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+exports.getBookmark = async (req, res) => {
+    try {
+        const bookmarks = await Bookmark.find();
+        res.status(200).json(bookmarks);
+    } catch (error) {
+        console.error('Error fetching bookmarks:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+

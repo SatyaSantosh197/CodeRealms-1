@@ -65,3 +65,47 @@ exports.deleteProblem = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+
+exports.getRandomQuestion = async (req, res) => {
+    try {
+        const { difficulty } = req.params;
+
+        // Aggregate query to fetch a random question by difficulty
+        const randomQuestion = await Problem.aggregate([
+            { $match: { difficulty } },
+            { $sample: { size: 1 } }
+        ]);
+
+        // If a random question is found, send it in the response
+        if (randomQuestion.length > 0) {
+            res.json(randomQuestion[0]);
+        } else {
+            console.error(`No ${difficulty} question found`);
+            res.status(404).json({ error: `No ${difficulty} question found` });
+        }
+    } catch (error) {
+        console.error("Error fetching random question:", error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.getQuestionId = async (req, res) => {
+    try {
+        // Extract question title and difficulty from the request body
+        const { questionTitle, difficulty } = req.body;
+
+        // Query the database to find the question with matching title and difficulty
+        const question = await Problem.findOne({ QuestionTitle : questionTitle, difficulty });
+
+        if (!question) {
+            return res.status(404).json({ error: 'Question not found' });
+        }
+
+        // If the question is found, send its ID to the client
+        res.json({ questionID: question._id });
+    } catch (error) {
+        console.error('Error fetching question ID:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
