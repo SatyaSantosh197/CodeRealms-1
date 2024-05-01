@@ -49,6 +49,16 @@ app.get('/questionbank', async (req, res) => {
     }
 });
 
+app.get('/logout', (req, res) => {
+    // Clear all cookies
+    res.clearCookie('userjwt');
+    res.clearCookie('superjwt');
+    res.clearCookie('moderatorjwt');
+
+    // Redirect to the home page or any other page you prefer
+    res.redirect('/');
+});
+
 
 const PORT = 8000;
 app.listen(PORT, () => {

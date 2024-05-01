@@ -17,48 +17,47 @@
 
     <div>
         <div class="navBar">
+            <!-- <video src="background.mp4" muted autoplay loop playsinline style="display: fixed; size: 1px;"></video>
+                    -->
+      
             <div class="logo">
                 <img src="/images/logo.png" class="logoMain">
-
             </div>
-
+      
             <div class="all_icons">
-                <div class="panelICon1"><ion-icon name="newspaper-outline" class="questions"
-                        id="questionicon"></ion-icon>
-                </div>
-                <div class="panel2ICon"><ion-icon name="home-outline" class="home" id="homeicon"></ion-icon></div>
-                <div class="panel3Icon">
-                    <ion-icon name="person-outline" class="user" id="profileicon" ></ion-icon>
-                    <span class="username">
-                        <%= username %>
-                    </span>
-                </div>
-
-
+                <div class="panelIcon"><a href="/profile"><img src="/images/profile.png"></a></a></div>
+                <div class="panel2Icon"><a href="/home"><img src="/images/home.png"></a></div>
+                <div class="panel3Icon"><a href="/questionbank"><img src="/images/greeenCodeBank.png"></a></div>
+                <span class="username">
+                  <%= username %>
+              </span>
             </div>
-
+      
             <div class="searchAndExit">
-                <div class="searchInput">
-                    <input type="text" placeholder="Search" class="searchi" id="searchInput">
+                <div class="searchBar">
+                    <div class="searchInput"><input type="text" placeholder="Search" class="searchi" id="realme_id"></div>
+                    <!-- <div class="searchImage"><ion-icon name="search-outline" class="search" type="button" value="Join" id="create_realme"></ion-icon></div> -->
+                    <input type="button" class="searchbit"
+                        style="display: flex; background-color: transparent; border-style: none;" value="🔍"
+                        id="create_realme">
+      
                 </div>
-                <!-- <div class="searchImage"><ion-icon name="search-outline" class="search" type="button" value="Join" id="create_realme"></ion-icon></div> -->
-                <input type="button" class="searchbit"
-                    style="display: flex; background-color: transparent; border-style: none;" value="🔍"
-                    id="create_realme">
-
-            </div>
-            <div class="Exit">
-
-                <img src="/images/user_profile.png" name="exit-outline" class="exitIcon" id="exitIcon"
-                    onclick="wrong"></ion-icon>
-                <div class="profileOptions">
-                    <ul>
-                        <li><a href="/">Logout</a></li>
-                        <li><a href="#">Settings</a></li>
-                    </ul>
+                <div class="Exit">
+      
+                    <img src="/images/user_profile.png" name="exit-outline" class="exitIcon" id="exitIcon"
+                        onclick="wrong"></ion-icon>
+      
+                    <div class="profileOptions">
+                        <ul>
+                            <li><a href="/logout">Logout</a></li>
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                    </div>
                 </div>
+      
             </div>
-
+      
+      
         </div>
 
 

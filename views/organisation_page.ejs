@@ -57,24 +57,18 @@
 
 
     <div class="navBar">
-
-
+      <!-- <video src="background.mp4" muted autoplay loop playsinline style="display: fixed; size: 1px;"></video>
+              -->
 
       <div class="logo">
         <img src="/images/logo.png" class="logoMain">
-
       </div>
 
       <div class="all_icons">
-        <div class="panelICon1"><ion-icon name="newspaper-outline" class="questions" id="questionicon"></ion-icon>
-        </div>
-        <div class="panel2ICon"><ion-icon name="home-outline" class="home" id="homeicon"></ion-icon></div>
-        <div class="panel3Icon"><ion-icon name="person-outline" class="user" id="profileicon"></ion-icon>
-          <span class="username">
-            <%= username %>
-          </span>
-        </div>
-
+        <div class="panel2Icon"><a href="/home"><img src="/images/home.png"></a></div>
+        <span class="username">
+          <%= username %>
+        </span>
       </div>
 
       <div class="searchAndExit">
@@ -89,9 +83,10 @@
 
           <img src="/images/user_profile.png" name="exit-outline" class="exitIcon" id="exitIcon"
             onclick="wrong"></ion-icon>
+
           <div class="profileOptions">
             <ul>
-              <li><a href="/">Logout</a></li>
+              <li><a href="/logout">Logout</a></li>
               <li><a href="#">Settings</a></li>
             </ul>
           </div>
@@ -127,9 +122,9 @@
         <br>
         <br>
         <div class="realme_container">
-            <% dropdownsHTML.forEach((dropdownHTML, index)=> { %>
-              <%- dropdownHTML %>
-            <% }) %>
+          <% dropdownsHTML.forEach((dropdownHTML, index)=> { %>
+            <%- dropdownHTML %>
+              <% }) %>
         </div>
 
 
