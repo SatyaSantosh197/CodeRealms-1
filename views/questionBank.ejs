@@ -308,7 +308,7 @@ Since, 1 is not present, so output is -1.
                     const imagePath = `/images/PNG-cards-1.3/image (${randomImageIndex}).png`;
 
                     const cardHTML = `
-                <div class="questionCard" id="${problem._id}" data-difficulty="${difficulty}">
+                <div class="questionCard" id="${problem._id}" data-difficulty="${difficulty}" onclick=redirectToPage(${problem._id}) >
                     <div class="flip">
                         <div class="QuestionUpper" id="${problem._id}" style="background-image: url('${imagePath}'); background-size:contain;background-repeat:no-repeat">
                         </div>
@@ -431,9 +431,9 @@ Since, 1 is not present, so output is -1.
 
             return bookmarkedQuestionDiv;
         }
-        function redirectToPage() {
+        function redirectToPage(probId) {
             // Logic to get the question ID and redirect to the corresponding path
-            const questionID = "getQuestionIDLogicHere"; // Replace with your logic to get the question ID
+            const questionID = probId; // Replace with your logic to get the question ID
             window.location.href = `/RCET/practice/${questionID}`;
         }
 
